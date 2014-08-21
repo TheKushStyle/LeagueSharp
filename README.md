@@ -8,7 +8,9 @@ Aims Q with collison check.
 
 Usage of W.
 
-Usage of E.
+Usage of E. 
+
+Usege of R If enemies in Range set by user.
 
 Orbwalker
 
