@@ -18,7 +18,6 @@ namespace StonedAmumu
     {
 
     /* To do :
-     * Auto R if enemies in range
      * Drawings
      * JungleClear
      */
