@@ -1,14 +1,15 @@
 ﻿#region
 using System;
-using System.Collections.Generic;
+using System.Collections;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
+/////////////////
 using LeagueSharp;
 using LeagueSharp.Common;
 using SharpDX;
 using Color = System.Drawing.Color;
+using System.Collections.Generic;
+using System.Threading;
+/////////////////
 #endregion
 
 namespace StonedAmumu
@@ -86,8 +87,8 @@ namespace StonedAmumu
             Config.SubMenu("Combo").AddItem(new MenuItem("UseWCombo", "Use W")).SetValue(true);
             Config.SubMenu("Combo").AddItem(new MenuItem("UseECombo", "Use E")).SetValue(true);
             Config.SubMenu("Combo").AddItem(new MenuItem("UseItems", "Use Items")).SetValue(true);
-            //Config.SubMenu("Combo").AddItem(new MenuItem("AutoR", "Auto R")).SetValue(true);
-            //Config.SubMenu("Combo").AddItem(new MenuItem("AutoRNUM", "Auto R if enemies in Range")).SetValue(new Slider(1, 5, 0));
+            Config.SubMenu("Combo").AddItem(new MenuItem("AutoR", "Auto R")).SetValue(true);
+            Config.SubMenu("Combo").AddItem(new MenuItem("CountR", "Num of Enemy in Range to Ult").SetValue(new Slider(1, 5, 0)));
             Config.SubMenu("Combo").AddItem(new MenuItem("ActiveCombo", "Combo!").SetValue(new KeyBind(32, KeyBindType.Press)));
 
             //JungleClear
@@ -111,9 +112,9 @@ namespace StonedAmumu
             Game.OnGameUpdate += OnGameUpdate;
             //Drawing.OnDraw += OnDraw;
 
-            
-            
-            Game.PrintChat("StonedAmumu Loaded By TheKushStyle");
+
+
+            Game.PrintChat("<font color='#FF00BF'>Stoned Amumu Loaded By</font> <font color='#FF0000'>The</font><font color='#FFFF00'>Kush</font><font color='#40FF00'>Style</font>");
         }
 
         private static void OnGameUpdate(EventArgs args)
@@ -125,41 +126,13 @@ namespace StonedAmumu
             {
                 Combo();
             }
-            /*if (Config.Item("ActiveClear").GetValue<KeyBind>().Active)
+            if (Config.Item("ActiveClear").GetValue<KeyBind>().Active)
             {
-                JungleClear();
-            }
-            
-            if (Config.Item("AutoR").GetValue<bool>())
-            {
-                StunR();
-            }
+                //JungleClear();
+            }         
             
         }
-
-        private static void StunR()
-        {
-            if (R.IsReady() && Config.SubMenu("Combo").Item("AutoR").GetValue<bool>())
-            {
-                int reqHitNum = Config.SubMenu("Combo").Item("AutoRNUM").GetValue<Slider>().Value;
-                int hitNum = 0;
-                Vector2 castPosition = new Vector2();
-
-                foreach (var enemy in ObjectManager.Get<Obj_AI_Hero>())
-                {
-                    var prediction = R.GetPrediction(enemy);
-                    if (prediction.HitChance == Prediction.HitChance.HighHitchance && prediction.TargetsHit > hitNum)
-                    {
-                        //hitNum = prediction.TargetsHit();
-                        castPosition = prediction.CastPosition.To2D();
-                    }
-                }
-                if (hitNum >= reqHitNum)
-                    R.Cast(castPosition);
-            }
-             */ 
-        }
-        
+    
 
         private static void Combo()
         {
@@ -192,12 +165,30 @@ namespace StonedAmumu
                     RDO.Cast(target);
                 }
             }
-           
+            if (Config.Item("AutoR").GetValue<bool>())
+            {
+
+                if (GetNumberHitByR(target) >= Config.Item("CountR").GetValue<Slider>().Value)
+                {
+                    R.Cast();
+                }
+            }
 
            
         }
 
-
+        private static int GetNumberHitByR(Obj_AI_Base target) // Credits to Trelli For helping me with this one!
+        {
+            int totalHit = 0;
+            foreach (Obj_AI_Hero current in ObjectManager.Get<Obj_AI_Hero>())
+            {
+                if (current.IsEnemy && Vector3.Distance(Player.ServerPosition, current.ServerPosition) <= R.Range)
+                {
+                    totalHit = totalHit + 1;
+                }
+            }
+            return totalHit;
+        }
      /*private static void JungleClear()
         {
             var mobs = MinionManager.GetMinions(ObjectManager.Player.ServerPosition, Q.Range, MinionTypes.All,
