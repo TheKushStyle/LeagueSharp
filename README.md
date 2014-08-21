@@ -10,7 +10,7 @@ Usage of W.
 
 Usage of E. 
 
-Usege of R If enemies in Range set by user.
+Usage of R If enemies in Range set by user.
 
 Orbwalker
 
