@@ -14,6 +14,6 @@ Usage of R If enemies in Range set by user.
 
 Orbwalker 
 
-DrawsRanges
+Draws Ranges
 
 
