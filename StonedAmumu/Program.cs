@@ -16,18 +16,10 @@ namespace StonedAmumu
     internal class Program
     {
 
-<<<<<<< HEAD
         /* To do :
          * JungleClear
          */
 
-=======
-    /* To do :
-     * Drawings
-     * JungleClear
-     */
-        
->>>>>>> origin/master
         private const string Champion = "Amumu";
 
         private static Orbwalking.Orbwalker Orbwalker;
@@ -103,6 +95,7 @@ namespace StonedAmumu
             Config.SubMenu("Jungle").AddItem(new MenuItem("UseEClear", "Use E")).SetValue(true);
             Config.SubMenu("Jungle").AddItem(new MenuItem("ActiveClear", "Jungle Key").SetValue(new KeyBind("V".ToCharArray()[0], KeyBindType.Press)));
             */
+            
             //Drawings
             Config.AddSubMenu(new Menu("Drawings", "Drawings"));
             Config.SubMenu("Drawings").AddItem(new MenuItem("DrawQ", "Draw Q")).SetValue(true);
