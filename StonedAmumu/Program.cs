@@ -16,10 +16,18 @@ namespace StonedAmumu
     internal class Program
     {
 
+<<<<<<< HEAD
         /* To do :
          * JungleClear
          */
 
+=======
+    /* To do :
+     * Drawings
+     * JungleClear
+     */
+        
+>>>>>>> origin/master
         private const string Champion = "Amumu";
 
         private static Orbwalking.Orbwalker Orbwalker;
