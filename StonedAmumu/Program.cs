@@ -49,6 +49,8 @@ namespace StonedAmumu
 
         private static Items.Item CUT;
 
+        private static Items.Item TYM;
+
         private static Obj_AI_Hero Player;
 
         static void Main(string[] args)
@@ -80,6 +82,7 @@ namespace StonedAmumu
             YOY = new Items.Item(3142, 185f);
             BOTK = new Items.Item(3153, 450f);
             CUT = new Items.Item(3144, 450f);
+            TYM = new Items.Item(3077, 175f);
 
             //Menu Amumu
             Config = new Menu(Champion, "StonedAmumu", true);
@@ -109,7 +112,14 @@ namespace StonedAmumu
             Config.SubMenu("Jungle").AddItem(new MenuItem("UseWClear", "Use W")).SetValue(true);
             Config.SubMenu("Jungle").AddItem(new MenuItem("UseEClear", "Use E")).SetValue(true);
             Config.SubMenu("Jungle").AddItem(new MenuItem("ActiveClear", "Jungle Key").SetValue(new KeyBind("V".ToCharArray()[0], KeyBindType.Press)));
-            
+
+            //WaveClear
+            Config.AddSubMenu(new Menu("Wave Clear", "Wave"));
+            Config.SubMenu("Wave").AddItem(new MenuItem("UseQWave", "Use Q")).SetValue(true);
+            Config.SubMenu("Wave").AddItem(new MenuItem("UseWWave", "Use W")).SetValue(true);
+            Config.SubMenu("Wave").AddItem(new MenuItem("UseEWave", "Use E")).SetValue(true);
+            Config.SubMenu("Wave").AddItem(new MenuItem("ActiveWave", "WaveClear Key").SetValue(new KeyBind("V".ToCharArray()[0], KeyBindType.Press)));
+
             //Drawings
             Config.AddSubMenu(new Menu("Drawings", "Drawings"));
             Config.SubMenu("Drawings").AddItem(new MenuItem("DrawQ", "Draw Q")).SetValue(true);
@@ -144,7 +154,82 @@ namespace StonedAmumu
             {
                 JungleClear();
             }
+            if (Config.Item("ActiveWave").GetValue<KeyBind>().Active)
+            {
+                WaveClear();
+            }
 
+        }
+
+        private static void WaveClear()
+        {
+            var Minions = MinionManager.GetMinions(Player.ServerPosition, Q.Range);
+
+            var useQ = Config.Item("UseQClear").GetValue<bool>();
+            var useW = Config.Item("UseWClear").GetValue<bool>();
+            var useE = Config.Item("UseEClear").GetValue<bool>();
+
+            var minions = MinionManager.GetMinions(Player.ServerPosition, Q.Range);
+
+            if (minions.Count > 0)
+            {
+                if (useQ && Q.IsReady() && minions[0].IsValidTarget() && Player.Distance(minions[0]) <= Q.Range)
+                {
+                    Q.Cast(minions[0].Position);
+                }
+
+                if (useW && W.IsReady() && minions[0].IsValidTarget())
+                {
+                    if (Player.Distance(minions[0]) <= W.Range && (Player.Spellbook.GetSpell(SpellSlot.W).ToggleState == 1))
+                    {
+                        W.Cast();
+                    }
+                    else if (Player.Distance(minions[0]) > W.Range && (Player.Spellbook.GetSpell(SpellSlot.W).ToggleState == 2))
+                    {
+                        W.Cast();
+                    }
+
+                }
+
+                if (useE && E.IsReady() && minions[0].IsValidTarget() && Player.Distance(minions[0]) <= E.Range)
+                {
+                    E.Cast();
+                }
+            }
+
+
+            if (useW)
+            {
+                foreach (var minion in minions)
+                {
+                    if (W.IsReady() && minion.IsValidTarget() && Player.Distance(minion) <= W.Range && (Player.Spellbook.GetSpell(SpellSlot.W).ToggleState == 1))
+                    {
+                        W.Cast();
+                    }
+                }
+            }
+
+            if (useW)
+            {
+                foreach (var minion in minions)
+                {
+                    if (W.IsReady() && minion.IsValidTarget() && Player.Distance(minion) > W.Range && (Player.Spellbook.GetSpell(SpellSlot.W).ToggleState == 2))
+                    {
+                        W.Cast();
+                    }
+                }
+            }
+
+            if (useE)
+            {
+                foreach (var minion in minions)
+                {
+                    if (E.IsReady() && minion.IsValidTarget() && Player.Distance(minion) <= E.Range)
+                    {
+                        E.Cast();
+                    }
+                }
+            }
         }
 
         private static void JungleClear() //Credits To Flapperdoodle! 
@@ -268,6 +353,10 @@ namespace StonedAmumu
                 if (Player.Distance(target) <= 125f)
                 {
                     YOY.Cast();
+                }
+                if (Player.Distance(target) <= TYM.Range)
+                {
+                    TYM.Cast(target);
                 }
             }
             if (Config.Item("AutoR").GetValue<bool>())
