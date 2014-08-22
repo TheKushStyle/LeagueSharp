@@ -147,57 +147,76 @@ namespace StonedAmumu
 
         }
 
-        private static void JungleClear()
-        { //credits to xQx
-            var JungleFarmActive = Config.Item("JungleClear").GetValue<KeyBind>().Active;
-
-            if (JungleFarmActive)
-            {
+        private static void JungleClear() //Credits To Flapperdoodle! 
+        {
                 var useQ = Config.Item("UseQClear").GetValue<bool>();
                 var useW = Config.Item("UseWClear").GetValue<bool>();
                 var useE = Config.Item("UseEClear").GetValue<bool>();
+ 
+                 var allminions = MinionManager.GetMinions(Player.ServerPosition, Q.Range, MinionTypes.All, MinionTeam.Neutral, MinionOrderTypes.MaxHealth);
+                
+				 if (allminions.Count > 0)
+                    {
+                        if (useQ && Q.IsReady() && allminions[0].IsValidTarget() && Player.Distance(allminions[0]) <= Q.Range)
+                            {
+                                Q.Cast(allminions[0].Position);
+                            }
+                    
+						if (useW && W.IsReady() && allminions[0].IsValidTarget())
+						{
+							if (Player.Distance(allminions[0]) <= W.Range && (Player.Spellbook.GetSpell(SpellSlot.W).ToggleState == 1))
+								{
+									W.Cast();
+								} 
+                            else if(Player.Distance(allminions[0]) > W.Range && (Player.Spellbook.GetSpell(SpellSlot.W).ToggleState == 2))
+								{
+									W.Cast();
+								}
+					
+						}
 
-                var mobs = MinionManager.GetMinions(Player.ServerPosition, Q.Range,
-                    MinionTypes.All, MinionTeam.Neutral, MinionOrderTypes.MaxHealth);
+						if (useE && E.IsReady() && allminions[0].IsValidTarget() && Player.Distance(allminions[0]) <= E.Range)
+						{
+						E.Cast();
+                        }
+                    }
+        
 
-                if (mobs.Count > 0)
-                {
-                    if (Q.IsReady() && useQ && IsPositionSafe(mobs[0], Q))
-                        Q.CastOnUnit(mobs[0]);
+                   if (useW)
+                     {
+                        foreach (var minion in allminions)
+                         {
+                             if (W.IsReady() && minion.IsValidTarget() && Player.Distance(minion) <= W.Range && (Player.Spellbook.GetSpell(SpellSlot.W).ToggleState == 1))
+                             {
+                                 W.Cast();
+                            }
+                        }
+                    }
 
-                    if (W.IsReady() && useW)
-                        W.Cast();
+                    if (useW)
+                     {
+                         foreach (var minion in allminions)
+                         {
+                             if (W.IsReady() && minion.IsValidTarget() && Player.Distance(minion) > W.Range && (Player.Spellbook.GetSpell(SpellSlot.W).ToggleState == 2))
+                             {
+                                 W.Cast();
+                             }
+                         }
+                     }
 
-                    if (E.IsReady() && useE)
-                        E.CastOnUnit(mobs[0]);
+                    if (useE)
+                    {
+                        foreach (var minion in allminions)
+                        {
+                            if (E.IsReady() && minion.IsValidTarget() && Player.Distance(minion) <= E.Range)
+                            {
+                                E.Cast();
+                            }
+                        }
+                    }
                 }
-            }
-        }
+            
 
-        public static bool IsPositionSafe(Obj_AI_Base vTarget, Spell vSpell)
-        { //Credits to xQx
-            Vector2 predPos = vSpell.GetPrediction(vTarget).Position.To2D();
-            Vector2 myPos = ObjectManager.Player.Position.To2D();
-            Vector2 newPos = (vTarget.Position.To2D() - myPos);
-            newPos.Normalize();
-
-            Vector2 checkPos = predPos + newPos * (vSpell.Range - Vector2.Distance(predPos, myPos));
-            Obj_Turret closestTower = null;
-
-            foreach (Obj_Turret tower in ObjectManager.Get<Obj_Turret>().Where(tower => tower.IsValid && !tower.IsDead && tower.Health != 0 && tower.IsEnemy))
-            {
-                if (Vector3.Distance(tower.Position, ObjectManager.Player.Position) < 1450)
-                    closestTower = tower;
-            }
-
-            if (closestTower == null)
-                return true;
-
-            if (Vector2.Distance(closestTower.Position.To2D(), checkPos) <= 910)
-                return false;
-
-            return true;
-        }
 
 
         private static void Combo()
