@@ -163,12 +163,14 @@ namespace StonedVolibear
                 E.Cast();
             }
             //WLogic
-            float Health = (Player.MaxHealth * (Config.Item("CountW").GetValue<Slider>().Value) /100);
-            if (Player.Health <= Health)
+           float health = Player.Health;
+           float maxhealth = Player.MaxHealth;
+           float wcount = Config.Item("CountW").GetValue<Slider>().Value;
+            if (health < ((maxhealth * wcount)/100))
             {
                 if (Config.Item("UseWCombo").GetValue<bool>() && W.IsReady())
                 {
-                    W.Cast();
+                    W.Cast(target);
                 }
             }
             if (Config.Item("AutoR").GetValue<bool>() && R.IsReady() && (GetNumberHitByR(target) >= Config.Item("CountR").GetValue<Slider>().Value))
