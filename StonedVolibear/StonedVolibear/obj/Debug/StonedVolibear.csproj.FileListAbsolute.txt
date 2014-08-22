@@ -1,0 +1,11 @@
+c:\users\frankboersma\documents\visual studio 2013\Projects\StonedVolibear\StonedVolibear\bin\Debug\StonedVolibear.exe.config
+c:\users\frankboersma\documents\visual studio 2013\Projects\StonedVolibear\StonedVolibear\obj\Debug\StonedVolibear.csprojResolveAssemblyReference.cache
+c:\users\frankboersma\documents\visual studio 2013\Projects\StonedVolibear\StonedVolibear\bin\Debug\StonedVolibear.exe
+c:\users\frankboersma\documents\visual studio 2013\Projects\StonedVolibear\StonedVolibear\bin\Debug\StonedVolibear.pdb
+c:\users\frankboersma\documents\visual studio 2013\Projects\StonedVolibear\StonedVolibear\bin\Debug\LeagueSharp.Common.dll
+c:\users\frankboersma\documents\visual studio 2013\Projects\StonedVolibear\StonedVolibear\bin\Debug\LeagueSharp.dll
+c:\users\frankboersma\documents\visual studio 2013\Projects\StonedVolibear\StonedVolibear\bin\Debug\SharpDX.dll
+c:\users\frankboersma\documents\visual studio 2013\Projects\StonedVolibear\StonedVolibear\bin\Debug\SharpDX.Direct3D9.dll
+c:\users\frankboersma\documents\visual studio 2013\Projects\StonedVolibear\StonedVolibear\bin\Debug\LeagueSharp.xml
+c:\users\frankboersma\documents\visual studio 2013\Projects\StonedVolibear\StonedVolibear\obj\Debug\StonedVolibear.exe
+c:\users\frankboersma\documents\visual studio 2013\Projects\StonedVolibear\StonedVolibear\obj\Debug\StonedVolibear.pdb
