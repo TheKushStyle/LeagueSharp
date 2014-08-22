@@ -16,7 +16,7 @@ namespace StonedVolibear
 {
     internal   class Program
     {
-        private const string Champion = "Amumu";
+        private const string Champion = "Volibear";
 
         private static Orbwalking.Orbwalker Orbwalker;
 
