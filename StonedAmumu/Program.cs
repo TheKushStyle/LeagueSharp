@@ -11,14 +11,15 @@ using System.Collections.Generic;
 using System.Threading;
 #endregion
 
+//Todo: nothing ATM feel free to suggest
+
+
 namespace StonedAmumu
 {
     internal class Program
     {
 
-        /* To do :
-         * JungleClear
-         */
+       
 
         private const string Champion = "Amumu";
 
@@ -37,6 +38,16 @@ namespace StonedAmumu
         private static Menu Config;
 
         private static Items.Item RDO;
+
+        private static Items.Item DFG;
+
+        private static Items.Item YOY;
+
+        private static Items.Item BOTK;
+
+        private static Items.Item HYD;
+
+        private static Items.Item CUT;
 
         private static Obj_AI_Hero Player;
 
@@ -63,8 +74,12 @@ namespace StonedAmumu
             SpellList.Add(E);
             SpellList.Add(R);
 
-            RDO = new Items.Item(3143, 490);
-
+            RDO = new Items.Item(3143, 490f);
+            HYD = new Items.Item(3074, 175f);
+            DFG = new Items.Item(3128, 750f);
+            YOY = new Items.Item(3142, 185f);
+            BOTK = new Items.Item(3153, 450f);
+            CUT = new Items.Item(3144, 450f);
 
             //Menu Amumu
             Config = new Menu(Champion, "StonedAmumu", true);
@@ -89,12 +104,11 @@ namespace StonedAmumu
             Config.SubMenu("Combo").AddItem(new MenuItem("ActiveCombo", "Combo!").SetValue(new KeyBind(32, KeyBindType.Press)));
 
             //JungleClear
-            /*Config.AddSubMenu(new Menu("Jungle Clear", "Jungle"));
+            Config.AddSubMenu(new Menu("Jungle Clear", "Jungle"));
             Config.SubMenu("Jungle").AddItem(new MenuItem("UseQClear", "Use Q")).SetValue(true);
             Config.SubMenu("Jungle").AddItem(new MenuItem("UseWClear", "Use W")).SetValue(true);
             Config.SubMenu("Jungle").AddItem(new MenuItem("UseEClear", "Use E")).SetValue(true);
             Config.SubMenu("Jungle").AddItem(new MenuItem("ActiveClear", "Jungle Key").SetValue(new KeyBind("V".ToCharArray()[0], KeyBindType.Press)));
-            */
             
             //Drawings
             Config.AddSubMenu(new Menu("Drawings", "Drawings"));
@@ -109,7 +123,7 @@ namespace StonedAmumu
             Config.AddToMainMenu();
 
             Game.OnGameUpdate += OnGameUpdate;
-            //Drawing.OnDraw += OnDraw;
+            Drawing.OnDraw += OnDraw;
 
 
 
@@ -128,9 +142,61 @@ namespace StonedAmumu
             }
             if (Config.Item("ActiveClear").GetValue<KeyBind>().Active)
             {
-                //JungleClear();
+                JungleClear();
             }
 
+        }
+
+        private static void JungleClear()
+        { //credits to xQx
+            var JungleFarmActive = Config.Item("JungleClear").GetValue<KeyBind>().Active;
+
+            if (JungleFarmActive)
+            {
+                var useQ = Config.Item("UseQClear").GetValue<bool>();
+                var useW = Config.Item("UseWClear").GetValue<bool>();
+                var useE = Config.Item("UseEClear").GetValue<bool>();
+
+                var mobs = MinionManager.GetMinions(Player.ServerPosition, Q.Range,
+                    MinionTypes.All, MinionTeam.Neutral, MinionOrderTypes.MaxHealth);
+
+                if (mobs.Count > 0)
+                {
+                    if (Q.IsReady() && useQ && IsPositionSafe(mobs[0], Q))
+                        Q.CastOnUnit(mobs[0]);
+
+                    if (W.IsReady() && useW)
+                        W.Cast();
+
+                    if (E.IsReady() && useE)
+                        E.CastOnUnit(mobs[0]);
+                }
+            }
+        }
+
+        public static bool IsPositionSafe(Obj_AI_Base vTarget, Spell vSpell)
+        { //Credits to xQx
+            Vector2 predPos = vSpell.GetPrediction(vTarget).Position.To2D();
+            Vector2 myPos = ObjectManager.Player.Position.To2D();
+            Vector2 newPos = (vTarget.Position.To2D() - myPos);
+            newPos.Normalize();
+
+            Vector2 checkPos = predPos + newPos * (vSpell.Range - Vector2.Distance(predPos, myPos));
+            Obj_Turret closestTower = null;
+
+            foreach (Obj_Turret tower in ObjectManager.Get<Obj_Turret>().Where(tower => tower.IsValid && !tower.IsDead && tower.Health != 0 && tower.IsEnemy))
+            {
+                if (Vector3.Distance(tower.Position, ObjectManager.Player.Position) < 1450)
+                    closestTower = tower;
+            }
+
+            if (closestTower == null)
+                return true;
+
+            if (Vector2.Distance(closestTower.Position.To2D(), checkPos) <= 910)
+                return false;
+
+            return true;
         }
 
 
@@ -140,21 +206,21 @@ namespace StonedAmumu
             if (target == null) return;
 
             //Combo
-            if (Player.Distance(target) <= Q.Range && Q.IsReady())
+            if (Player.Distance(target) <= Q.Range && Q.IsReady() && (Config.Item("UseQCombo").GetValue<bool>()))
             {
                 Q.Cast(target);
             }
-            if (W.IsReady() && (Player.Spellbook.GetSpell(SpellSlot.W).ToggleState == 1))
+            if (W.IsReady() && (Player.Spellbook.GetSpell(SpellSlot.W).ToggleState == 1) && (Config.Item("UseWCombo").GetValue<bool>()))
                 if (Player.ServerPosition.Distance(target.Position) < W.Range)
                 {
                     W.Cast();
                 }
-            if (W.IsReady() && Player.Spellbook.GetSpell(SpellSlot.W).ToggleState == 2)
+            if (W.IsReady() && (Player.Spellbook.GetSpell(SpellSlot.W).ToggleState == 2) && (Config.Item("UseWCombo").GetValue<bool>()))
                 if (Player.ServerPosition.Distance(target.Position) > W.Range)
                 {
                     W.Cast();
                 }
-            if (Player.Distance(target) <= E.Range && E.IsReady())
+            if (Player.Distance(target) <= E.Range && E.IsReady() && (Config.Item("UseECombo").GetValue<bool>()))
             {
                 E.Cast();
             }
@@ -163,6 +229,26 @@ namespace StonedAmumu
                 if (Player.Distance(target) <= RDO.Range)
                 {
                     RDO.Cast(target);
+                }
+                if (Player.Distance(target) <= HYD.Range)
+                {
+                    HYD.Cast(target);
+                }
+                if (Player.Distance(target) <= DFG.Range)
+                {
+                    DFG.Cast(target);
+                }
+                if (Player.Distance(target) <= BOTK.Range)
+                {
+                    BOTK.Cast(target);
+                }
+                if (Player.Distance(target) <= CUT.Range)
+                {
+                    CUT.Cast(target);
+                }
+                if (Player.Distance(target) <= 125f)
+                {
+                    YOY.Cast();
                 }
             }
             if (Config.Item("AutoR").GetValue<bool>())
@@ -189,33 +275,7 @@ namespace StonedAmumu
             }
             return totalHit;
         }
-        /*private static void JungleClear()
-           {
-               var mobs = MinionManager.GetMinions(ObjectManager.Player.ServerPosition, Q.Range, MinionTypes.All,
-                   MinionTeam.Neutral, MinionOrderTypes.MaxHealth);
-               if (mobs.Count > 0)
-               {
-                   var mob = mobs[0];
-                   if (Q.IsReady () && Config.SubMenu("JungleClear").Item("UseQClear").GetValue<bool>())
-                   {
-                       Q.CastOnUnit(mob);
-                   }
-                   if (W.IsReady() && (Player.Spellbook.GetSpell(SpellSlot.W).ToggleState == 1) && Config.SubMenu("JungleClear").Item("UseWClear").GetValue<bool>())
-                   {
-                       W.CastOnUnit(mob);
-                   }
-                   if (W.IsReady() && (Player.Spellbook.GetSpell(SpellSlot.W).ToggleState == 2) && Config.SubMenu("JungleClear").Item("UseWClear").GetValue<bool>())
-                   {
-                       W.CastOnUnit(mob);
-                   }
-                   if (E.IsReady () && Config.SubMenu("JungleClear").Item("UseEClear").GetValue<bool>())
-                   {
-                       E.CastOnUnit(mob);
-                   }
-
-                
-               }
-           } */
+        
 
 
 
