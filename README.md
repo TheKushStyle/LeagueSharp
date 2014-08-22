@@ -22,6 +22,8 @@ JungleClear.
 
 Usage of items.
 
+WaveClear.
+
 Stoned-Volibear
 ===========
 <img src ="http://i.imgur.com/JnnUTSs.jpg" alt="StonedVolibear" height"320" width="460">
