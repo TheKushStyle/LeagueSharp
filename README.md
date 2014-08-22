@@ -14,8 +14,25 @@ Usage of E.
 
 Usage of R If enemies in Range set by user.
 
-Orbwalker 
+OrbWalking .
 
-Draws Ranges
+Draws Ranges.
 
+JungleClear.
+
+Usage of items.
+
+Stoned-Volibear
+===========
+<img src ="http://i.imgur.com/JnnUTSs.jpg" alt="StonedVolibear" height"320" width="460">
+
+SBTW Combo with W and R logic.  
+
+Harass.
+
+Draws Ranges.
+
+OrbWalking.
+
+Usage of items.
 
