@@ -163,8 +163,8 @@ namespace StonedVolibear
                 E.Cast();
             }
             //WLogic
-           float health = Player.Health;
-           float maxhealth = Player.MaxHealth;
+           float health = target.Health;
+           float maxhealth = target.MaxHealth;
            float wcount = Config.Item("CountW").GetValue<Slider>().Value;
             if (health < ((maxhealth * wcount)/100))
             {
