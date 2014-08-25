@@ -1,4 +1,4 @@
-﻿#region
+#region
 using System;
 using System.Collections;
 using System.Linq;
@@ -69,7 +69,7 @@ namespace StonedAmumu
             E = new Spell(SpellSlot.E, 350);
             R = new Spell(SpellSlot.R, 525);
 
-            Q.SetSkillshot(0.250f, 80, 2000, true, Prediction.SkillshotType.SkillshotLine);
+            Q.SetSkillshot(0.250f, 80, 2000, true, SkillshotType.SkillshotLine);
 
             SpellList.Add(Q);
             SpellList.Add(W);
