@@ -69,7 +69,8 @@ namespace StonedAmumu
             E = new Spell(SpellSlot.E, 350);
             R = new Spell(SpellSlot.R, 525);
 
-            Q.SetSkillshot(0.250f, 80, 2000, true, Prediction.SkillshotType.SkillshotLine);
+            Q.SetSkillshot(0.250f, 80, 2000, true, SkillshotType.SkillshotLine);
+           
 
             SpellList.Add(Q);
             SpellList.Add(W);
@@ -113,12 +114,18 @@ namespace StonedAmumu
             Config.SubMenu("Jungle").AddItem(new MenuItem("UseEClear", "Use E")).SetValue(true);
             Config.SubMenu("Jungle").AddItem(new MenuItem("ActiveClear", "Jungle Key").SetValue(new KeyBind("V".ToCharArray()[0], KeyBindType.Press)));
 
+            //PacketCasting
+            Config.AddSubMenu(new Menu("PacketCasting", "PacketCast"));
+            Config.SubMenu("PacketCasting").AddItem(new MenuItem("Packet", "Cast Packets")).SetValue(true);
+
             //WaveClear
             Config.AddSubMenu(new Menu("Wave Clear", "Wave"));
             Config.SubMenu("Wave").AddItem(new MenuItem("UseQWave", "Use Q")).SetValue(true);
             Config.SubMenu("Wave").AddItem(new MenuItem("UseWWave", "Use W")).SetValue(true);
             Config.SubMenu("Wave").AddItem(new MenuItem("UseEWave", "Use E")).SetValue(true);
             Config.SubMenu("Wave").AddItem(new MenuItem("ActiveWave", "WaveClear Key").SetValue(new KeyBind("V".ToCharArray()[0], KeyBindType.Press)));
+
+           
 
             //Drawings
             Config.AddSubMenu(new Menu("Drawings", "Drawings"));
@@ -243,21 +250,30 @@ namespace StonedAmumu
             //Combo
             if (Player.Distance(target) <= Q.Range && Q.IsReady() && (Config.Item("UseQCombo").GetValue<bool>()))
             {
-                Q.Cast(target);
+                
+                    Q.Cast(target);
+
             }
             if (W.IsReady() && (Player.Spellbook.GetSpell(SpellSlot.W).ToggleState == 1) && (Config.Item("UseWCombo").GetValue<bool>()))
                 if (Player.ServerPosition.Distance(target.Position) < W.Range)
                 {
-                    W.Cast();
+                   
+                   W.Cast();
+                    
                 }
             if (W.IsReady() && (Player.Spellbook.GetSpell(SpellSlot.W).ToggleState == 2) && (Config.Item("UseWCombo").GetValue<bool>()))
                 if (Player.ServerPosition.Distance(target.Position) > W.Range)
                 {
-                    W.Cast();
+                    
+                    
+                        W.Cast();
+                    
                 }
             if (Player.Distance(target) <= E.Range && E.IsReady() && (Config.Item("UseECombo").GetValue<bool>()))
             {
-                E.Cast();
+               
+                    E.Cast();
+                
             }
             if (Config.Item("UseItems").GetValue<bool>())
             {
@@ -295,7 +311,7 @@ namespace StonedAmumu
 
                 if (GetNumberHitByR(target) >= Config.Item("CountR").GetValue<Slider>().Value)
                 {
-                    R.Cast();
+                    R.Cast(target, Config.Item("Packet").GetValue<bool>());
                 }
             }
 
@@ -307,7 +323,7 @@ namespace StonedAmumu
             int totalHit = 0;
             foreach (Obj_AI_Hero current in ObjectManager.Get<Obj_AI_Hero>())
             {
-                if (current.IsEnemy && Vector3.Distance(Player.ServerPosition, current.ServerPosition) <= R.Range)
+                if (current.IsEnemy && Vector3.Distance(Player.Position, current.Position) <= R.Range)
                 {
                     totalHit = totalHit + 1;
                 }
