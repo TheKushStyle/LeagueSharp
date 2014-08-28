@@ -114,10 +114,6 @@ namespace StonedAmumu
             Config.SubMenu("Jungle").AddItem(new MenuItem("UseEClear", "Use E")).SetValue(true);
             Config.SubMenu("Jungle").AddItem(new MenuItem("ActiveClear", "Jungle Key").SetValue(new KeyBind("V".ToCharArray()[0], KeyBindType.Press)));
 
-            //PacketCasting
-            Config.AddSubMenu(new Menu("PacketCasting", "PacketCast"));
-            Config.SubMenu("PacketCasting").AddItem(new MenuItem("Packet", "Cast Packets")).SetValue(true);
-
             //WaveClear
             Config.AddSubMenu(new Menu("Wave Clear", "Wave"));
             Config.SubMenu("Wave").AddItem(new MenuItem("UseQWave", "Use Q")).SetValue(true);
