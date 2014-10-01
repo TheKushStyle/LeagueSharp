@@ -136,37 +136,41 @@ namespace StonedMundo
 
         private static void OnGameUpdate(EventArgs args)
         {
-            Player = ObjectManager.Player;
+            {
+                if (Player.IsDead) return;
 
-            Orbwalker.SetAttacks(true);
+                Player = ObjectManager.Player;
 
-            if (Config.Item("ActiveCombo").GetValue<KeyBind>().Active)
-            {
-                Combo();
-            }
-            if (Config.Item("ActiveClear").GetValue<KeyBind>().Active)
-            {
-                JungleClear();
-            }
-            if (Config.Item("ActiveWave").GetValue<KeyBind>().Active)
-            {
-                WaveClear();
-            }
-            if (Config.Item("ActiveHarass").GetValue<KeyBind>().Active)
-            {
-                Harass();
-            }
-            if (Config.Item("Harass Tog").GetValue<KeyBind>().Active)
-            {
-                HarassTog();
-            }
-            if (Config.Item("Rsave").GetValue<bool>())
-            {
-                Rsave();
-            }
-            if (Config.Item("KS").GetValue<bool>())
-            {
-                Killsteal();
+                Orbwalker.SetAttacks(true);
+
+                if (Config.Item("ActiveCombo").GetValue<KeyBind>().Active)
+                {
+                    Combo();
+                }
+                if (Config.Item("ActiveClear").GetValue<KeyBind>().Active)
+                {
+                    JungleClear();
+                }
+                if (Config.Item("ActiveWave").GetValue<KeyBind>().Active)
+                {
+                    WaveClear();
+                }
+                if (Config.Item("ActiveHarass").GetValue<KeyBind>().Active)
+                {
+                    Harass();
+                }
+                if (Config.Item("Harass Tog").GetValue<KeyBind>().Active)
+                {
+                    HarassTog();
+                }
+                if (Config.Item("Rsave").GetValue<bool>())
+                {
+                    Rsave();
+                }
+                if (Config.Item("KS").GetValue<bool>())
+                {
+                    Killsteal();
+                }
             }
         }
 
@@ -216,7 +220,15 @@ namespace StonedMundo
         private static void Combo()
         {
             var target = SimpleTs.GetTarget(Q.Range, SimpleTs.DamageType.Magical);
-
+            bool ActiveW = false;
+            if (Player.HasBuff("BurningAgony"))
+            {
+                ActiveW = true;
+            }
+            else
+            {
+                ActiveW = false;
+            }
 
             if (target.IsValidTarget() && Config.Item("UseQCombo").GetValue<bool>() && Q.IsReady() && Player.Distance(target) <= Q.Range)
             {
@@ -224,11 +236,11 @@ namespace StonedMundo
                 if (Qpredict.Hitchance >= HitChance.High)
                     Q.Cast(Qpredict.CastPosition);
             }
-            if (target.IsValidTarget() && Config.Item("UseWCombo").GetValue<bool>() && W.IsReady() && Player.Distance(target) <= W.Range && (Player.Spellbook.GetSpell(SpellSlot.W).ToggleState == 1) )
+            if (target.IsValidTarget() && Config.Item("UseWCombo").GetValue<bool>() && W.IsReady() &&Player.Distance(target) <= W.Range && !ActiveW)
             {
                 W.Cast();
             }
-            if (target.IsValidTarget() && Config.Item("UseWCombo").GetValue<bool>() && W.IsReady() && Player.Distance(target) > W.Range && (Player.Spellbook.GetSpell(SpellSlot.W).ToggleState == 2))
+            if (target.IsValidTarget() && Config.Item("UseWCombo").GetValue<bool>() && W.IsReady() && Player.Distance(target) > 600f && ActiveW)
             {
                 W.Cast();
             }
