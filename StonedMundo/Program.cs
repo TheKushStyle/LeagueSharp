@@ -224,11 +224,13 @@ namespace StonedMundo
                 if (Qpredict.Hitchance >= HitChance.High)
                     Q.Cast(Qpredict.CastPosition);
             }
-            if (target.IsValidTarget() && Config.Item("UseWCombo").GetValue<bool>() && W.IsReady() && Player.Distance(target) <= W.Range && (Player.Spellbook.GetSpell(SpellSlot.W).ToggleState == 1) )
+            if (W.IsReady() && (Player.Spellbook.GetSpell(SpellSlot.W).ToggleState == 1) && (Config.Item("UseWCombo").GetValue<bool>()))
+                if (Player.ServerPosition.Distance(target.Position) < W.Range)
             {
                 W.Cast();
             }
-            if (target.IsValidTarget() && Config.Item("UseWCombo").GetValue<bool>() && W.IsReady() && Player.Distance(target) > W.Range && (Player.Spellbook.GetSpell(SpellSlot.W).ToggleState == 2))
+            if (W.IsReady() && (Player.Spellbook.GetSpell(SpellSlot.W).ToggleState == 2) && (Config.Item("UseWCombo").GetValue<bool>()))
+                if (Player.ServerPosition.Distance(target.Position) < W.Range)
             {
                 W.Cast();
             }
