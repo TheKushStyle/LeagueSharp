@@ -1,4 +1,4 @@
-﻿#region
+#region
 using System;
 using System.Collections;
 using System.Linq;
@@ -118,8 +118,6 @@ namespace StonedMundo
             Config.AddSubMenu(new Menu("Drawings", "Drawings"));
             Config.SubMenu("Drawings").AddItem(new MenuItem("DrawQ", "Draw Q")).SetValue(true);
             Config.SubMenu("Drawings").AddItem(new MenuItem("DrawW", "Draw W")).SetValue(true);
-            Config.SubMenu("Drawings").AddItem(new MenuItem("DrawE", "Draw E")).SetValue(true);
-            Config.SubMenu("Drawings").AddItem(new MenuItem("DrawR", "Draw R")).SetValue(true);
             Config.SubMenu("Drawings").AddItem(new MenuItem("CircleLag", "Lag Free Circles").SetValue(true));
             Config.SubMenu("Drawings").AddItem(new MenuItem("CircleQuality", "Circles Quality").SetValue(new Slider(100, 100, 10)));
             Config.SubMenu("Drawings").AddItem(new MenuItem("CircleThickness", "Circles Thickness").SetValue(new Slider(1, 10, 1)));
@@ -181,9 +179,7 @@ namespace StonedMundo
 
             if (target.IsValidTarget() && Config.Item("KS").GetValue<bool>() && Q.IsReady() && Player.Distance(target) <= Q.Range && target.Health < QDamage)
             {
-                PredictionOutput Qpredict = Q.GetPrediction(target);
-                if (Qpredict.Hitchance >= HitChance.High)
-                    Q.Cast(Qpredict.CastPosition);
+                Q.Cast(target, true);
             }
         }
 
@@ -211,9 +207,7 @@ namespace StonedMundo
 
             if (target.IsValidTarget() && Q.IsReady() && HealthPer >= CountHarass && Player.Distance(target) <= Q.Range)
             {
-                PredictionOutput Qpredict = Q.GetPrediction(target);
-                if (Qpredict.Hitchance >= HitChance.High)
-                    Q.Cast(Qpredict.CastPosition);
+                Q.Cast(target, true);
             }
         }
 
@@ -232,18 +226,18 @@ namespace StonedMundo
 
             if (target.IsValidTarget() && Config.Item("UseQCombo").GetValue<bool>() && Q.IsReady() && Player.Distance(target) <= Q.Range)
             {
-                PredictionOutput Qpredict = Q.GetPrediction(target);
-                if (Qpredict.Hitchance >= HitChance.High)
-                    Q.Cast(Qpredict.CastPosition);
+                Q.Cast(target, true);
             }
+
             if (target.IsValidTarget() && Config.Item("UseWCombo").GetValue<bool>() && W.IsReady() &&Player.Distance(target) <= W.Range && !ActiveW)
             {
                 W.Cast();
             }
-            if (target.IsValidTarget() && Config.Item("UseWCombo").GetValue<bool>() && W.IsReady() && Player.Distance(target) > 600f && ActiveW)
+            if (target.IsValidTarget() && Config.Item("UseWCombo").GetValue<bool>() && W.IsReady() && Player.Distance(target) > 700f && ActiveW)
             {
                 W.Cast();
             }
+            
             if (Config.Item("UseECombo").GetValue<bool>() && E.IsReady() && Player.Distance(target) <= E.Range)
             {
                 E.Cast();
@@ -283,7 +277,7 @@ namespace StonedMundo
 
         private static void Rsave()
         {
-            int EnInRang = Utility.CountEnemysInRange(980);
+            int EnInRang = Utility.CountEnemysInRange(1000);
 
             if (Player.Health < (Player.Health * Config.Item("Rhp").GetValue<Slider>().Value * 0.01) && R.IsReady() && EnInRang >= 1)
             {
@@ -294,6 +288,16 @@ namespace StonedMundo
         private static void WaveClear()
         {
             var Minions = MinionManager.GetMinions(Player.ServerPosition, Q.Range);
+
+            bool ActiveW = false;
+            if (Player.HasBuff("BurningAgony"))
+            {
+                ActiveW = true;
+            }
+            else
+            {
+                ActiveW = false;
+            }
 
             var useQ = Config.Item("UseQClear").GetValue<bool>();
             var useW = Config.Item("UseWClear").GetValue<bool>();
@@ -308,7 +312,11 @@ namespace StonedMundo
                     Q.Cast(minions[0].Position);
                 }
 
-                if (useW && W.IsReady() && minions[0].IsValidTarget() && Player.Distance(minions[0]) <= W.Range)
+                if (useW && W.IsReady() && minions[0].IsValidTarget() && !ActiveW && Player.Distance(minions[0]) <= 700)
+                {
+                    W.Cast();
+                }
+                if (useW && W.IsReady() && minions[0].IsValidTarget() && ActiveW && Player.Distance(minions[0]) > 700)
                 {
                     W.Cast();
                 }
@@ -322,6 +330,17 @@ namespace StonedMundo
 
         private static void JungleClear()
         {
+
+            bool ActiveW = false;
+            if (Player.HasBuff("BurningAgony"))
+            {
+                ActiveW = true;
+            }
+            else
+            {
+                ActiveW = false;
+            }
+
             var useQ = Config.Item("UseQClear").GetValue<bool>();
             var useW = Config.Item("UseWClear").GetValue<bool>();
             var useE = Config.Item("UseEClear").GetValue<bool>();
@@ -335,7 +354,12 @@ namespace StonedMundo
                     Q.Cast(allminions[0].Position);
                 }
 
-                if (useW && W.IsReady() && allminions[0].IsValidTarget() && Player.Distance(allminions[0]) <= W.Range)
+                if (useW && W.IsReady() && allminions[0].IsValidTarget() && Player.Distance(allminions[0]) <= 700 && !ActiveW)
+                {
+                    W.Cast();
+                }
+
+                if (useW && W.IsReady() && allminions[0].IsValidTarget() && Player.Distance(allminions[0]) > 700 && ActiveW)
                 {
                     W.Cast();
                 }
@@ -360,18 +384,6 @@ namespace StonedMundo
                 if (Config.Item("DrawW").GetValue<bool>())
                 {
                     Utility.DrawCircle(ObjectManager.Player.Position, W.Range, System.Drawing.Color.White,
-                        Config.Item("CircleThickness").GetValue<Slider>().Value,
-                        Config.Item("CircleQuality").GetValue<Slider>().Value);
-                }
-                if (Config.Item("DrawE").GetValue<bool>())
-                {
-                    Utility.DrawCircle(ObjectManager.Player.Position, E.Range, System.Drawing.Color.White,
-                        Config.Item("CircleThickness").GetValue<Slider>().Value,
-                        Config.Item("CircleQuality").GetValue<Slider>().Value);
-                }
-                if (Config.Item("DrawR").GetValue<bool>())
-                {
-                    Utility.DrawCircle(ObjectManager.Player.Position, R.Range, System.Drawing.Color.White,
                         Config.Item("CircleThickness").GetValue<Slider>().Value,
                         Config.Item("CircleQuality").GetValue<Slider>().Value);
                 }
