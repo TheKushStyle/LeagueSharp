@@ -48,6 +48,10 @@ namespace EmoteSpammer
 
             if (ObjectManager.Player.HasBuff("Recall")) return;
             
+<<<<<<< HEAD
+=======
+            
+>>>>>>> origin/master
             //Game.PrintChat(tick.ToString());
             {
                 if ((Config.Item("EmotePress").GetValue<KeyBind>().Active) && tick == 59 )
@@ -61,7 +65,10 @@ namespace EmoteSpammer
             }
         }
 
+<<<<<<< HEAD
         
+=======
+>>>>>>> origin/master
         private static void SPAM()
         {
             
