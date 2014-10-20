@@ -47,7 +47,7 @@ namespace EmoteSpammer
             tick = TimeSpan.FromSeconds(Environment.TickCount).Minutes;
             
             
-            Game.PrintChat(tick.ToString());
+            //Game.PrintChat(tick.ToString());
             {
                 if ((Config.Item("EmotePress").GetValue<KeyBind>().Active) && tick == 59 )
                 {
