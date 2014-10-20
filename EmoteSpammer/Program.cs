@@ -55,29 +55,11 @@ namespace EmoteSpammer
                 }
                 if (Config.Item("EmoteToggable").GetValue<KeyBind>().Active && tick == 59)
                 {
-                    SPAMT();
+                    SPAM();
                 }
             }
         }
 
-        private static void SPAMT()
-        {
-            if ((Config.Item("Type").GetValue<Slider>().Value) == 1)
-            {
-                Packet.C2S.Emote.Encoded(new Packet.C2S.Emote.Struct(2)).Send();
-                Packet.C2S.Move.Encoded(new Packet.C2S.Move.Struct(Game.CursorPos.X, Game.CursorPos.Y)).Send();
-            }
-            if ((Config.Item("Type").GetValue<Slider>().Value) == 2)
-            {
-                Packet.C2S.Emote.Encoded(new Packet.C2S.Emote.Struct(1)).Send();
-                Packet.C2S.Move.Encoded(new Packet.C2S.Move.Struct(Game.CursorPos.X, Game.CursorPos.Y)).Send();
-            }
-            if ((Config.Item("Type").GetValue<Slider>().Value) == 3)
-            {
-                Packet.C2S.Emote.Encoded(new Packet.C2S.Emote.Struct(3)).Send();
-                Packet.C2S.Move.Encoded(new Packet.C2S.Move.Struct(Game.CursorPos.X, Game.CursorPos.Y)).Send();
-            }
-        } 
         private static void SPAM()
         {
             
