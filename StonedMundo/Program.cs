@@ -139,7 +139,7 @@ namespace StonedMundo
 
                 Player = ObjectManager.Player;
 
-                Orbwalker.SetAttacks(true);
+                Orbwalker.SetAttack(true);
 
                 if (Config.Item("ActiveCombo").GetValue<KeyBind>().Active)
                 {
