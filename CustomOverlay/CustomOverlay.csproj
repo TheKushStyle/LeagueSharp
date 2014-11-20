@@ -1,0 +1,211 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Release</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{80003BB5-C4E9-4DC1-B0DD-17258541DC8E}</ProjectGuid>
+    <OutputType>Exe</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>CustomOverlay</RootNamespace>
+    <AssemblyName>CustomOverlay</AssemblyName>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <PreBuildEvent />
+    <PostBuildEvent />
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <PlatformTarget>x86</PlatformTarget>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Release</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <PlatformTarget>x86</PlatformTarget>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="LeagueSharp">
+      <HintPath>C:\Users\FrankTest\Documents\LeagueSharp\\System\LeagueSharp.dll</HintPath>
+    </Reference>
+    <Reference Include="LeagueSharp.Common">
+      <HintPath>C:\Users\FrankTest\Documents\LeagueSharp\\System\LeagueSharp.Common.dll</HintPath>
+    </Reference>
+    <Reference Include="SharpDX">
+      <HintPath>C:\Users\FrankTest\Documents\LeagueSharp\\System\SharpDX.dll</HintPath>
+    </Reference>
+    <Reference Include="SharpDX.Direct3D9, Version=2.5.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>C:\Users\FrankTest\Documents\LeagueSharp\\System\SharpDX.Direct3D9.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Program.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="App.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\hud_1.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\hud_2.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\hud_3.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\hud_4.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\hud_5.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\hud_6.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\hud_7.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\hud_8.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\hud_9.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\hud_10.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\hud_11.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\hud_12.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\hud_13.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\hud_14.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\hud_15.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\hud_16.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\hud_17.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\hud_18.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\hud_19.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\hud_20.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\hud_21.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\hud_22.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\hud_23.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\hud_24.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\hud_25.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\hud_26.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\hud_27.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\hud_28.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\hud_29.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\hud_30.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\hud_31.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\hud_32.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\hud_33.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\hud_34.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\hud_35.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\hud_36.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\hud_37.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\hud_38.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\hud_39.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\hud_40.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\hud_41.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\hud_42.png" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>
