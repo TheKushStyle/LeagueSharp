@@ -25,7 +25,7 @@ namespace CustomOverlay
                 config = new Menu("Custom Overlay", "Custom Overlay", true);
                 config.AddItem(new MenuItem("slider", "Choose Overlay").SetValue(new Slider(1, 1,42)));
 
-                sprite = new Render.Sprite(Properties.Resources.hud_1, new Vector2(0, 0));
+                sprite = new Render.Sprite(Properties.Resources.hud_1, new Vector2(1, 1));
                 sprite.Add(0);
                 Game.PrintChat("<font color='#FF00BF'>Custom Overlay Loaded By</font> <font color='#FF0000'>The</font><font color='#FFFF00'>Kush</font><font color='#40FF00'>Style</font>");
             };
