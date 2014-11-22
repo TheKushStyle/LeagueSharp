@@ -35,7 +35,6 @@ namespace SafeJungle
         Config.SubMenu("WalkSpot").AddItem(new MenuItem("WalkSpot3", "Wolves").SetValue(new KeyBind(34, KeyBindType.Press)));
         Config.SubMenu("WalkSpot").AddItem(new MenuItem("WalkSpot4", "Blue").SetValue(new KeyBind(37, KeyBindType.Press)));
         Config.SubMenu("WalkSpot").AddItem(new MenuItem("WalkSpot5", "Golems").SetValue(new KeyBind(12, KeyBindType.Press)));
-        Config.SubMenu("WalkSpot").AddItem(new MenuItem("WalkSpot6", "Dragon").SetValue(new KeyBind(39, KeyBindType.Press)));
 
         Config.AddSubMenu(new Menu("Drawings", "Drawings"));
         Config.SubMenu("Drawings").AddItem(new MenuItem("Spot1Draw", "Draw Red")).SetValue(true);
@@ -43,7 +42,6 @@ namespace SafeJungle
         Config.SubMenu("Drawings").AddItem(new MenuItem("Spot3Draw", "Draw Wolves")).SetValue(true);
         Config.SubMenu("Drawings").AddItem(new MenuItem("Spot4Draw", "Draw Blue")).SetValue(true);
         Config.SubMenu("Drawings").AddItem(new MenuItem("Spot5Draw", "Draw Golems")).SetValue(true);
-        Config.SubMenu("Drawings").AddItem(new MenuItem("Spot6Draw", "Draw Dragon")).SetValue(true);
         Config.SubMenu("Drawings").AddItem(new MenuItem("CircleLag", "Lag Free Circles").SetValue(true));
         Config.SubMenu("Drawings").AddItem(new MenuItem("CircleQuality", "Circles Quality").SetValue(new Slider(100, 100, 10)));
         Config.SubMenu("Drawings").AddItem(new MenuItem("CircleThickness", "Circles Thickness").SetValue(new Slider(30, 100, 1)));
@@ -62,71 +60,61 @@ namespace SafeJungle
             {
                 var Width = Config.Item("Width").GetValue<Slider>().Value;
                 if (Config.Item("TeamSwitch").GetValue<bool>() == true)
-                
+                //blue
                 {
 
-                if (Config.Item("Spot1Draw").GetValue<bool>())
+                if (Config.Item("Spot1Draw").GetValue<bool>()) //red
                 {
-                    Utility.DrawCircle(new Vector3(7444.8623046875f, 2980.26171875f, 56.261837005615f), Width, Color.Aqua ,Config.Item("CircleThickness").GetValue<Slider>().Value,
+                    Utility.DrawCircle(new Vector3(7592f, 3150f, 52.58508f), Width, Color.Aqua ,Config.Item("CircleThickness").GetValue<Slider>().Value,
                         Config.Item("CircleQuality").GetValue<Slider>().Value);
                 }
-                if (Config.Item("Spot2Draw").GetValue<bool>())
+                if (Config.Item("Spot2Draw").GetValue<bool>())//wraith
                 {
-                    Utility.DrawCircle(new Vector3(7232.5737304688f, 4671.7133789063f, 51.952449798584f), Width, Color.Aqua, Config.Item("CircleThickness").GetValue<Slider>().Value,
+                    Utility.DrawCircle(new Vector3(7164f,4610f,48.52682f), Width, Color.Aqua, Config.Item("CircleThickness").GetValue<Slider>().Value,
                         Config.Item("CircleQuality").GetValue<Slider>().Value);
                 }
-                if (Config.Item("Spot3Draw").GetValue<bool>())
+                if (Config.Item("Spot3Draw").GetValue<bool>())//wolves
                 {
-                    Utility.DrawCircle(new Vector3(4142.5556640625f, 5695.958984375f, 55.266135169434f), Width, Color.Aqua, Config.Item("CircleThickness").GetValue<Slider>().Value,
+                    Utility.DrawCircle(new Vector3(4562f, 6168f, 51.48312f), Width, Color.Aqua, Config.Item("CircleThickness").GetValue<Slider>().Value,
                         Config.Item("CircleQuality").GetValue<Slider>().Value);
                 }
-                if (Config.Item("Spot4Draw").GetValue<bool>())
+                if (Config.Item("Spot4Draw").GetValue<bool>())//blue
                 {
-                    Utility.DrawCircle(new Vector3(3402.3193359375f, 8429.149410625f, 53.792419433594f), Width, Color.Aqua, Config.Item("CircleThickness").GetValue<Slider>().Value,
+                    Utility.DrawCircle(new Vector3(3374f, 8620f, 10.76506f), Width, Color.Aqua, Config.Item("CircleThickness").GetValue<Slider>().Value,
                         Config.Item("CircleQuality").GetValue<Slider>().Value);
                 }
-                if (Config.Item("Spot5Draw").GetValue<bool>())
+                if (Config.Item("Spot5Draw").GetValue<bool>())//golem
                 {
-                    Utility.DrawCircle(new Vector3(7213.7822265625f, 2103.2778320313f, 54.743419647217f), Width, Color.Aqua, Config.Item("CircleThickness").GetValue<Slider>().Value,
-                        Config.Item("CircleQuality").GetValue<Slider>().Value);
-                }
-                if (Config.Item("Spot6Draw").GetValue<bool>())
-                {
-                    Utility.DrawCircle(new Vector3(10270.611328125f, 54f, 4974.5263671875f), Width, Color.Aqua, Config.Item("CircleThickness").GetValue<Slider>().Value,
+                    Utility.DrawCircle(new Vector3(7646f, 2130f, 51.16118f), Width, Color.Aqua, Config.Item("CircleThickness").GetValue<Slider>().Value,
                         Config.Item("CircleQuality").GetValue<Slider>().Value);
                 }
              
                 }
-                else
+                else //red
                 {
                     if (Config.Item("Spot1Draw").GetValue<bool>())
                     {
-                        Utility.DrawCircle(new Vector3(6859.1840820313f, 11497.25f, 52.699733734131f), Width, Color.Aqua, Config.Item("CircleThickness").GetValue<Slider>().Value,
+                        Utility.DrawCircle(new Vector3(7316f, 11606f, 51.27026f), Width, Color.Aqua, Config.Item("CircleThickness").GetValue<Slider>().Value,
                             Config.Item("CircleQuality").GetValue<Slider>().Value);
                     }
                     if (Config.Item("Spot2Draw").GetValue<bool>())
                     {
-                        Utility.DrawCircle(new Vector3(7010.9077148438f, 10021.69140625f, 57.372627258301f), Width, Color.Aqua, Config.Item("CircleThickness").GetValue<Slider>().Value,
+                        Utility.DrawCircle(new Vector3(7280f, 10100f, 51.82149f), Width, Color.Aqua, Config.Item("CircleThickness").GetValue<Slider>().Value,
                             Config.Item("CircleQuality").GetValue<Slider>().Value);
                     }
                     if (Config.Item("Spot3Draw").GetValue<bool>())
                     {
-                        Utility.DrawCircle(new Vector3(9850.3623046875f, 8781.2353515625f, 52.639091491699f), Width, Color.Aqua, Config.Item("CircleThickness").GetValue<Slider>().Value,
+                        Utility.DrawCircle(new Vector3(10218f, 9004f, 49.67321f), Width, Color.Aqua, Config.Item("CircleThickness").GetValue<Slider>().Value,
                             Config.Item("CircleQuality").GetValue<Slider>().Value);
                     }
                     if (Config.Item("Spot4Draw").GetValue<bool>())
                     {
-                        Utility.DrawCircle(new Vector3(11128.295898438f, 6225.5424804688f, 54.852607727051f), Width, Color.Aqua, Config.Item("CircleThickness").GetValue<Slider>().Value,
+                        Utility.DrawCircle(new Vector3(11548f, 6232f, 51.33665f), Width, Color.Aqua, Config.Item("CircleThickness").GetValue<Slider>().Value,
                             Config.Item("CircleQuality").GetValue<Slider>().Value);
                     }
                     if (Config.Item("Spot5Draw").GetValue<bool>())
                     {
-                        Utility.DrawCircle(new Vector3(6905.4633789063f, 12402.211914063f, 53.68051904004f), Width, Color.Aqua, Config.Item("CircleThickness").GetValue<Slider>().Value,
-                            Config.Item("CircleQuality").GetValue<Slider>().Value);
-                    }
-                    if (Config.Item("Spot6Draw").GetValue<bool>())
-                    {
-                        Utility.DrawCircle(new Vector3(10270.611328125f, 54f, 4974.5263671875f), Width, Color.Aqua, Config.Item("CircleThickness").GetValue<Slider>().Value,
+                        Utility.DrawCircle(new Vector3(7124f, 12806f, 56.4768f), Width, Color.Aqua, Config.Item("CircleThickness").GetValue<Slider>().Value,
                             Config.Item("CircleQuality").GetValue<Slider>().Value);
                     }
                 }
@@ -145,27 +133,23 @@ namespace SafeJungle
                 {
                    if      (Config.Item("WalkSpot1").GetValue<KeyBind>().Active)
                    {
-                       Packet.C2S.Move.Encoded(new Packet.C2S.Move.Struct(7444.8623046875f, 2980.26171875f)).Send();
+                       Packet.C2S.Move.Encoded(new Packet.C2S.Move.Struct(7592f,3150f)).Send();//red
                    }
                    else if (Config.Item("WalkSpot2").GetValue<KeyBind>().Active)
                    {
-                       Packet.C2S.Move.Encoded(new Packet.C2S.Move.Struct(7232.5737304688f, 4671.7133789063f)).Send();
+                       Packet.C2S.Move.Encoded(new Packet.C2S.Move.Struct(7164f, 4610f)).Send();//wraith
                    }
                    else if (Config.Item("WalkSpot3").GetValue<KeyBind>().Active)
                    {
-                       Packet.C2S.Move.Encoded(new Packet.C2S.Move.Struct(4142.5556640625f, 5695.958984375f)).Send();
+                       Packet.C2S.Move.Encoded(new Packet.C2S.Move.Struct(4562f, 6168f)).Send();//wolves
                    }
                    else if (Config.Item("WalkSpot4").GetValue<KeyBind>().Active)
                    {
-                       Packet.C2S.Move.Encoded(new Packet.C2S.Move.Struct(3402.3193359375f, 8429.149410625f)).Send();
+                       Packet.C2S.Move.Encoded(new Packet.C2S.Move.Struct(3374f, 8620f)).Send();//blue
                    }
                    else if (Config.Item("WalkSpot5").GetValue<KeyBind>().Active)
                    {
-                       Packet.C2S.Move.Encoded(new Packet.C2S.Move.Struct(7213.7822265625f, 2103.2778320313f)).Send();
-                   }
-                   else if (Config.Item("WalkSpot6").GetValue<KeyBind>().Active)
-                   {
-                       Packet.C2S.Move.Encoded(new Packet.C2S.Move.Struct(10270.611328125f, 54f)).Send();
+                       Packet.C2S.Move.Encoded(new Packet.C2S.Move.Struct(7646f, 2130f)).Send();//golem
                    }
                    }
                 //Purple Side
@@ -173,27 +157,23 @@ namespace SafeJungle
                 {
                     if      (Config.Item("WalkSpot1").GetValue<KeyBind>().Active)
                     {
-                        Packet.C2S.Move.Encoded(new Packet.C2S.Move.Struct(6859.1840820313f, 11497.25f)).Send();
+                        Packet.C2S.Move.Encoded(new Packet.C2S.Move.Struct(7316f, 11606f)).Send();//red
                     }
                     else if (Config.Item("WalkSpot2").GetValue<KeyBind>().Active)
                     {
-                        Packet.C2S.Move.Encoded(new Packet.C2S.Move.Struct(7010.9077148438f, 10021.69140625f)).Send();
+                        Packet.C2S.Move.Encoded(new Packet.C2S.Move.Struct(7280f, 10100f)).Send();//wraith
                     }
                     else if (Config.Item("WalkSpot3").GetValue<KeyBind>().Active)
                     {
-                        Packet.C2S.Move.Encoded(new Packet.C2S.Move.Struct(9850.3623046875f, 8781.2353515625f)).Send();
+                        Packet.C2S.Move.Encoded(new Packet.C2S.Move.Struct(10218f, 9004f)).Send();//wolves
                     }
                     else if (Config.Item("WalkSpot4").GetValue<KeyBind>().Active)
                     {
-                        Packet.C2S.Move.Encoded(new Packet.C2S.Move.Struct(11128.295898438f, 6225.5424804688f)).Send();
+                        Packet.C2S.Move.Encoded(new Packet.C2S.Move.Struct(11548f, 6232f)).Send();//blue
                     }
                     else if (Config.Item("WalkSpot5").GetValue<KeyBind>().Active)
                     {
-                        Packet.C2S.Move.Encoded(new Packet.C2S.Move.Struct(6905.4633789063f, 12402.211914063f)).Send();
-                    }
-                    else if (Config.Item("WalkSpot6").GetValue<KeyBind>().Active)
-                    {
-                        Packet.C2S.Move.Encoded(new Packet.C2S.Move.Struct(10270.611328125f, 54)).Send();
+                        Packet.C2S.Move.Encoded(new Packet.C2S.Move.Struct(7124f, 12806f)).Send();//golem
                     }
                 }
             }

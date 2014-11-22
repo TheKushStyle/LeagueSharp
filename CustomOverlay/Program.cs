@@ -20,6 +20,10 @@ namespace CustomOverlay
 
         static void Main(string[] args)
         {
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> 26dd4fd9ba9c4125a48435dec3d2bc5acff617db
             CustomEvents.Game.OnGameLoad += Game_OnGameLoad;
         }
 
@@ -40,6 +44,25 @@ namespace CustomOverlay
         private static void OnGameUpdate(EventArgs args)
         {
             UpdateImage((Bitmap)Properties.Resources.ResourceManager.GetObject(string.Format("hud_{0}", config.Item("slider").GetValue<Slider>().Value))); 
+<<<<<<< HEAD
+=======
+            CustomEvents.Game.OnGameLoad += eventArgs =>
+            {
+                config = new Menu("Custom Overlay", "Custom Overlay", true);
+                config.AddItem(new MenuItem("slider", "Choose Overlay").SetValue(new Slider(1, 1,42)));
+
+                sprite = new Render.Sprite(Properties.Resources.hud_1, new Vector2(1, 1));
+                sprite.Add(0);
+                Game.PrintChat("<font color='#FF00BF'>Custom Overlay Loaded By</font> <font color='#FF0000'>The</font><font color='#FFFF00'>Kush</font><font color='#40FF00'>Style</font>");
+            };
+
+            Game.OnGameUpdate += eventArgs =>
+            {
+                UpdateImage((Bitmap)Properties.Resources.ResourceManager.GetObject(string.Format("hud_{0}", config.Item("slider").GetValue<Slider>().Value))); // try to update image
+            };
+>>>>>>> origin/master
+=======
+>>>>>>> 26dd4fd9ba9c4125a48435dec3d2bc5acff617db
         }
 
         private static void UpdateImage(Bitmap bitmap)
