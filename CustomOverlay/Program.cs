@@ -51,10 +51,6 @@ namespace CustomOverlay
                 Game.PrintChat("<font color='#FF00BF'>Custom Overlay Loaded By</font> <font color='#FF0000'>The</font><font color='#FFFF00'>Kush</font><font color='#40FF00'>Style</font>");
             };
 
-            Game.OnGameUpdate += eventArgs =>
-            {
-                UpdateImage((Bitmap)Properties.Resources.ResourceManager.GetObject(string.Format("hud_{0}", config.Item("slider").GetValue<Slider>().Value))); // try to update image
-            };
         }
 
         private static void UpdateImage(Bitmap bitmap)
