@@ -20,10 +20,6 @@ namespace CustomOverlay
 
         static void Main(string[] args)
         {
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> 26dd4fd9ba9c4125a48435dec3d2bc5acff617db
             CustomEvents.Game.OnGameLoad += Game_OnGameLoad;
         }
 
@@ -44,8 +40,7 @@ namespace CustomOverlay
         private static void OnGameUpdate(EventArgs args)
         {
             UpdateImage((Bitmap)Properties.Resources.ResourceManager.GetObject(string.Format("hud_{0}", config.Item("slider").GetValue<Slider>().Value))); 
-<<<<<<< HEAD
-=======
+
             CustomEvents.Game.OnGameLoad += eventArgs =>
             {
                 config = new Menu("Custom Overlay", "Custom Overlay", true);
@@ -60,9 +55,6 @@ namespace CustomOverlay
             {
                 UpdateImage((Bitmap)Properties.Resources.ResourceManager.GetObject(string.Format("hud_{0}", config.Item("slider").GetValue<Slider>().Value))); // try to update image
             };
->>>>>>> origin/master
-=======
->>>>>>> 26dd4fd9ba9c4125a48435dec3d2bc5acff617db
         }
 
         private static void UpdateImage(Bitmap bitmap)
