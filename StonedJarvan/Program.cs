@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -26,6 +26,8 @@ namespace StonedJarvan
 
         private static Spell R;
 
+        public static SpellSlot IgniteSlot;
+
         private static Menu Config;
 
         private static Obj_AI_Hero Player;
@@ -45,6 +47,11 @@ namespace StonedJarvan
             E = new Spell(SpellSlot.E, 800);
             R = new Spell(SpellSlot.R, 650);
 
+<<<<<<< HEAD
+            IgniteSlot = Player.GetSpellSlot("SummonerDot");
+
+=======
+>>>>>>> origin/master
             Q.SetSkillshot(0.25f, 70f, 1450f, false, SkillshotType.SkillshotLine);
             E.SetSkillshot(0.5f, 175f, int.MaxValue, false, SkillshotType.SkillshotCircle);
 
@@ -82,6 +89,8 @@ namespace StonedJarvan
 
             Config.AddSubMenu(new Menu("Misc", "Misc"));
             Config.SubMenu("Misc").AddItem(new MenuItem("EQmouse", "EQ To Mouse").SetValue(new KeyBind("G".ToCharArray()[0], KeyBindType.Press)));
+            Config.SubMenu("Misc").AddItem(new MenuItem("Ignite","Use Ignite").SetValue(true));
+
             Config.AddToMainMenu();
 
             Game.OnGameUpdate += OnGameUpdate;
@@ -110,6 +119,8 @@ namespace StonedJarvan
         private static void OnGameUpdate(EventArgs args)
         {
             Player = ObjectManager.Player;
+            var target = SimpleTs.GetTarget(Q.Range, SimpleTs.DamageType.Physical);
+            if (target == null) return;
 
             Orbwalker.SetAttack(true);
             if (Config.Item("ActiveCombo").GetValue<KeyBind>().Active)
@@ -120,6 +131,11 @@ namespace StonedJarvan
             {
                 EQMouse();
             }
+            if (Player.Distance(target) <= 600 && IgniteDamage(target) >= target.Health && Config.Item("Ignite").GetValue<bool>())
+            {
+                Player.SummonerSpellbook.CastSpell(IgniteSlot, target);
+            }
+
         }
 
         private static void EQMouse()
@@ -160,6 +176,8 @@ namespace StonedJarvan
             {
                 W.Cast();
             }
+            
+
         }
 
         private static void OnDraw(EventArgs args)
@@ -210,6 +228,12 @@ namespace StonedJarvan
                     Drawing.DrawCircle(ObjectManager.Player.Position, R.Range, System.Drawing.Color.White);
                 }
             }
+        }
+
+        private static float IgniteDamage(Obj_AI_Hero target)
+        {
+            if (IgniteSlot == SpellSlot.Unknown || Player.SummonerSpellbook.CanUseSpell(IgniteSlot) != SpellState.Ready) return 0f;
+            return (float)Player.GetSummonerSpellDamage(target, Damage.SummonerSpell.Ignite);
         }
     }
 }
