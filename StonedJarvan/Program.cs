@@ -130,7 +130,7 @@ namespace StonedJarvan
             }
             if (Player.Distance(target) <= 600 && IgniteDamage(target) >= target.Health && Config.Item("Ignite").GetValue<bool>())
             {
-                Player.SummonerSpellbook.CastSpell(IgniteSlot, target);
+                Player.Spellbook.CastSpell(IgniteSlot, target);
             }
 
         }
@@ -229,7 +229,7 @@ namespace StonedJarvan
 
         private static float IgniteDamage(Obj_AI_Hero target)
         {
-            if (IgniteSlot == SpellSlot.Unknown || Player.SummonerSpellbook.CanUseSpell(IgniteSlot) != SpellState.Ready) return 0f;
+            if (IgniteSlot == SpellSlot.Unknown || Player.Spellbook.CanUseSpell(IgniteSlot) != SpellState.Ready) return 0f;
             return (float)Player.GetSummonerSpellDamage(target, Damage.SummonerSpell.Ignite);
         }
     }
