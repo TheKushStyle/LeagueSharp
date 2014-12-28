@@ -80,7 +80,7 @@ namespace StonedMundo
             Config = new Menu(Champion, "StonedMundo", true);
 
             var targetSelectorMenu = new Menu("Target Selector", "Target Selector");
-            SimpleTs.AddToMenu(targetSelectorMenu);
+            TargetSelector.AddToMenu(targetSelectorMenu);
             Config.AddSubMenu(targetSelectorMenu);
 
             Config.AddSubMenu(new Menu("Orbwalking", "Orbwalking"));
@@ -174,7 +174,7 @@ namespace StonedMundo
 
         private static void Killsteal()
         {
-            var target = SimpleTs.GetTarget(Q.Range, SimpleTs.DamageType.Magical);
+            var target = TargetSelector.GetTarget(Q.Range, TargetSelector.DamageType.Magical);
             var QDamage = Player.GetSpellDamage(target, SpellSlot.Q) * 0.96;
 
             if (target.IsValidTarget() && Config.Item("KS").GetValue<bool>() && Q.IsReady() && Player.Distance(target) <= Q.Range && target.Health < QDamage)
@@ -185,7 +185,7 @@ namespace StonedMundo
 
         private static void HarassTog()
         {
-            var target = SimpleTs.GetTarget(Q.Range, SimpleTs.DamageType.Magical);
+            var target = TargetSelector.GetTarget(Q.Range, TargetSelector.DamageType.Magical);
 
             var CountHarass = Config.Item("CountHarass").GetValue<Slider>().Value;
             var HealthPer = Player.Health * 100 / Player.MaxHealth;
@@ -200,7 +200,7 @@ namespace StonedMundo
 
         private static void Harass()
         {
-            var target = SimpleTs.GetTarget(Q.Range, SimpleTs.DamageType.Magical);
+            var target = TargetSelector.GetTarget(Q.Range, TargetSelector.DamageType.Magical);
 
             var CountHarass = Config.Item("CountHarass").GetValue<Slider>().Value;
             var HealthPer = Player.Health * 100 / Player.MaxHealth;
@@ -213,7 +213,7 @@ namespace StonedMundo
 
         private static void Combo()
         {
-            var target = SimpleTs.GetTarget(Q.Range, SimpleTs.DamageType.Magical);
+            var target = TargetSelector.GetTarget(Q.Range, TargetSelector.DamageType.Magical);
             bool ActiveW = false;
             if (Player.HasBuff("BurningAgony"))
             {

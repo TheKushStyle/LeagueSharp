@@ -90,7 +90,7 @@ namespace StonedAmumu
 
             //Ts
             var targetSelectorMenu = new Menu("Target Selector", "Target Selector");
-            SimpleTs.AddToMenu(targetSelectorMenu);
+            TargetSelector.AddToMenu(targetSelectorMenu);
             Config.AddSubMenu(targetSelectorMenu);
 
             //orb
@@ -240,7 +240,7 @@ namespace StonedAmumu
 
         private static void Combo()
         {
-            var target = SimpleTs.GetTarget(Q.Range, SimpleTs.DamageType.Magical);
+            var target = TargetSelector.GetTarget(Q.Range, TargetSelector.DamageType.Magical);
             if (target == null) return;
 
             //Combo

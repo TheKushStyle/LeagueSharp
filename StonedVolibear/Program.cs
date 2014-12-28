@@ -79,7 +79,7 @@ namespace StonedVolibear
 
             //ts
             var targetSelectorMenu = new Menu("Target Selector", "Target Selector");
-            SimpleTs.AddToMenu(targetSelectorMenu);
+            TargetSelector.AddToMenu(targetSelectorMenu);
             Config.AddSubMenu(targetSelectorMenu);
 
             //orb
@@ -139,7 +139,7 @@ namespace StonedVolibear
 
         private static void Harass()
         {
-            var target = SimpleTs.GetTarget(1100, SimpleTs.DamageType.Physical);
+            var target = TargetSelector.GetTarget(1100, TargetSelector.DamageType.Physical);
             if (target == null) return;
 
             if (Config.Item("HarassE").GetValue<bool>() && Player.Distance(target) <= E.Range && E.IsReady())
@@ -150,7 +150,7 @@ namespace StonedVolibear
 
         private static void Combo()
         {
-            var target = SimpleTs.GetTarget(1100, SimpleTs.DamageType.Physical);
+            var target = TargetSelector.GetTarget(1100, TargetSelector.DamageType.Physical);
             if (target == null) return;
 
             //Combo

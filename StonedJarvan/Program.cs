@@ -61,7 +61,7 @@ namespace StonedJarvan
 
 
             var targetSelectorMenu = new Menu("Target Selector", "Target Selector");
-            SimpleTs.AddToMenu(targetSelectorMenu);
+            TargetSelector.AddToMenu(targetSelectorMenu);
             Config.AddSubMenu(targetSelectorMenu);
 
             Config.AddSubMenu(new Menu("Orbwalking", "Orbwalking"));
@@ -116,7 +116,7 @@ namespace StonedJarvan
         private static void OnGameUpdate(EventArgs args)
         {
             Player = ObjectManager.Player;
-            var target = SimpleTs.GetTarget(Q.Range, SimpleTs.DamageType.Physical);
+            var target = TargetSelector.GetTarget(Q.Range, TargetSelector.DamageType.Physical);
             if (target == null) return;
 
             Orbwalker.SetAttack(true);
@@ -146,7 +146,7 @@ namespace StonedJarvan
 
         private static void Combo()
         {
-            var target = SimpleTs.GetTarget(Q.Range, SimpleTs.DamageType.Physical);
+            var target = TargetSelector.GetTarget(Q.Range, TargetSelector.DamageType.Physical);
             if (target == null) return;
 
             if (E.IsReady() && Q.IsReady())
