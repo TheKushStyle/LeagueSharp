@@ -279,7 +279,7 @@ namespace StonedMundo
         {
             int EnInRang = Utility.CountEnemysInRange(1000);
 
-            if (Player.Health < (Player.Health * Config.Item("Rhp").GetValue<Slider>().Value * 0.01) && R.IsReady() && EnInRang >= 1)
+            if (Player.Health < (Player.Health * Config.Item("Rhp").GetValue<Slider>().Value * 0.01) && R.IsReady() && EnInRang >= 1 || EnInRang == 1)
             {
                 R.Cast();
             }
