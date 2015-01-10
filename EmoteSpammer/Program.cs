@@ -68,7 +68,7 @@ namespace EmoteSpammer
             
            if ((Config.Item("Type").GetValue<Slider>().Value) == 1)
             {
-               Packet.C2S.Emote.Encoded(new Packet.C2S.Emote.Struct(2)).Send();
+              LeagueSharp.Network.Packets.C2S.Emote.Encoded(new Packet.C2S.Emote.Struct(2)).Send();
                Packet.C2S.Move.Encoded(new Packet.C2S.Move.Struct(Game.CursorPos.X, Game.CursorPos.Y)).Send();
             }
            if ((Config.Item("Type").GetValue<Slider>().Value) == 2)

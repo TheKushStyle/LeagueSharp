@@ -4,15 +4,16 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Release</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{2FDD544F-4735-4DB4-BC5C-4C84AB864A71}</ProjectGuid>
+    <ProjectGuid>{DFC4E9D0-2AFD-4F25-84FA-7981A5F5C600}</ProjectGuid>
     <OutputType>Exe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>JustMute</RootNamespace>
-    <AssemblyName>JustMute</AssemblyName>
+    <RootNamespace>StonedSeriesAIO</RootNamespace>
+    <AssemblyName>StonedSeriesAIO</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <PreBuildEvent />
     <PostBuildEvent />
+    <OutputPath>bin\Release</OutputPath>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <PlatformTarget>x86</PlatformTarget>
@@ -40,8 +41,12 @@
     <Reference Include="LeagueSharp.Common">
       <HintPath>C:\Users\Frank\Documents\LeagueSharp\\System\LeagueSharp.Common.dll</HintPath>
     </Reference>
+    <Reference Include="SharpDX">
+      <HintPath>C:\Users\Frank\Documents\LeagueSharp\\System\SharpDX.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Drawing" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -49,8 +54,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Amumu.cs" />
+    <Compile Include="DrMundo.cs" />
+    <Compile Include="JarvanIV.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Volibear.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
