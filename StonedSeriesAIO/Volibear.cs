@@ -107,7 +107,6 @@ namespace StonedSeriesAIO
             Config.SubMenu("Drawings").AddItem(new MenuItem("DrawE", "Draw E")).SetValue(true);
             Config.SubMenu("Drawings").AddItem(new MenuItem("DrawR", "Draw R")).SetValue(true);
             Config.SubMenu("Drawings").AddItem(new MenuItem("CircleLag", "Lag Free Circles").SetValue(true));
-            Config.SubMenu("Drawings").AddItem(new MenuItem("CircleQuality", "Circles Quality").SetValue(new Slider(100, 100, 10)));
             Config.SubMenu("Drawings").AddItem(new MenuItem("CircleThickness", "Circles Thickness").SetValue(new Slider(1, 10, 1)));
 
             Config.AddToMainMenu();
@@ -220,31 +219,27 @@ namespace StonedSeriesAIO
 
         private static void OnDraw(EventArgs args)
         {            
-                if (Config.Item("CircleLag").GetValue<bool>()) // Credits to SKOBOL
+                if (Config.Item("CircleLag").GetValue<bool>())
                 {
                     if (Config.Item("DrawQ").GetValue<bool>())
                     {
-                        Utility.DrawCircle(ObjectManager.Player.Position, Q.Range, System.Drawing.Color.White,
-                            Config.Item("CircleThickness").GetValue<Slider>().Value,
-                            Config.Item("CircleQuality").GetValue<Slider>().Value);
+                        Render.Circle.DrawCircle(ObjectManager.Player.Position, Q.Range, System.Drawing.Color.White,
+                            Config.Item("CircleThickness").GetValue<Slider>().Value);
                     }
                     if (Config.Item("DrawW").GetValue<bool>())
                     {
-                        Utility.DrawCircle(ObjectManager.Player.Position, W.Range, System.Drawing.Color.White,
-                            Config.Item("CircleThickness").GetValue<Slider>().Value,
-                            Config.Item("CircleQuality").GetValue<Slider>().Value);
+                        Render.Circle.DrawCircle(ObjectManager.Player.Position, W.Range, System.Drawing.Color.White,
+                            Config.Item("CircleThickness").GetValue<Slider>().Value);
                     }
                     if (Config.Item("DrawE").GetValue<bool>())
                     {
-                        Utility.DrawCircle(ObjectManager.Player.Position, E.Range, System.Drawing.Color.White,
-                            Config.Item("CircleThickness").GetValue<Slider>().Value,
-                            Config.Item("CircleQuality").GetValue<Slider>().Value);
+                        Render.Circle.DrawCircle(ObjectManager.Player.Position, E.Range, System.Drawing.Color.White,
+                            Config.Item("CircleThickness").GetValue<Slider>().Value);
                     }
                     if (Config.Item("DrawR").GetValue<bool>())
                     {
-                        Utility.DrawCircle(ObjectManager.Player.Position, R.Range, System.Drawing.Color.White,
-                            Config.Item("CircleThickness").GetValue<Slider>().Value,
-                            Config.Item("CircleQuality").GetValue<Slider>().Value);
+                        Render.Circle.DrawCircle(ObjectManager.Player.Position, R.Range, System.Drawing.Color.White,
+                            Config.Item("CircleThickness").GetValue<Slider>().Value);
                     }
                 }
                 else

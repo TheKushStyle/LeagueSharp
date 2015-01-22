@@ -389,15 +389,13 @@ namespace StonedSeriesAIO
             {
                 if (Config.Item("DrawQ").GetValue<bool>())
                 {
-                    Utility.DrawCircle(ObjectManager.Player.Position, Q.Range, System.Drawing.Color.White,
-                        Config.Item("CircleThickness").GetValue<Slider>().Value,
-                        Config.Item("CircleQuality").GetValue<Slider>().Value);
+                    Render.Circle.DrawCircle(ObjectManager.Player.Position, Q.Range, System.Drawing.Color.White,
+                        Config.Item("CircleThickness").GetValue<Slider>().Value);
                 }
                 if (Config.Item("DrawW").GetValue<bool>())
                 {
-                    Utility.DrawCircle(ObjectManager.Player.Position, W.Range, System.Drawing.Color.White,
-                        Config.Item("CircleThickness").GetValue<Slider>().Value,
-                        Config.Item("CircleQuality").GetValue<Slider>().Value);
+                    Render.Circle.DrawCircle(ObjectManager.Player.Position, W.Range, System.Drawing.Color.White,
+                        Config.Item("CircleThickness").GetValue<Slider>().Value);
                 }
             }
             else
