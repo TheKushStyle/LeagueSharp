@@ -115,6 +115,11 @@ namespace StonedJarvan
 
         private static void OnGameUpdate(EventArgs args)
         {
+            if (Config.Item("EQmouse").GetValue<KeyBind>().Active)
+            {
+                EQMouse();
+            }
+
             Player = ObjectManager.Player;
             var target = TargetSelector.GetTarget(Q.Range, TargetSelector.DamageType.Physical);
             if (target == null) return;
@@ -124,10 +129,7 @@ namespace StonedJarvan
             {
                 Combo();
             }
-            if (Config.Item("EQmouse").GetValue<KeyBind>().Active)
-            {
-                EQMouse();
-            }
+            
             if (Player.Distance(target) <= 600 && IgniteDamage(target) >= target.Health && Config.Item("Ignite").GetValue<bool>())
             {
                 Player.Spellbook.CastSpell(IgniteSlot, target);
