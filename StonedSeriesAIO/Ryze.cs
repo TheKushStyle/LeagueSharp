@@ -162,17 +162,17 @@ namespace StonedSeriesAIO
             {
                 if (useQ && Q.IsReady() && minions[0].IsValidTarget() && Player.Distance(minions[0]) <= Q.Range)
                 {
-                    Q.Cast(minions[0].Position);
+                    Q.Cast(minions[0]);
                 }
 
                 if (useW && W.IsReady() && minions[0].IsValidTarget() && Player.Distance(minions[0]) <= W.Range)
                 {
-                    W.Cast(minions[0].Position);
+                    W.Cast(minions[0]);
                 }
 
                 if (useE && E.IsReady() && minions[0].IsValidTarget() && Player.Distance(minions[0]) <= E.Range)
                 {
-                    E.Cast(minions[0].Position);
+                    E.Cast(minions[0]);
                 }
             }
         }
@@ -189,17 +189,17 @@ namespace StonedSeriesAIO
             {
                 if (useQ && Q.IsReady() && allminions[0].IsValidTarget() && Player.Distance(allminions[0]) <= Q.Range)
                 {
-                    Q.Cast(allminions[0].Position);
+                    Q.Cast(allminions[0]);
                 }
 
                 if (useW && W.IsReady() && allminions[0].IsValidTarget() && Player.Distance(allminions[0]) <= W.Range)
                 {
-                    W.Cast(allminions[0].Position);
+                    W.Cast(allminions[0]);
                 }
 
                 if (useE && E.IsReady() && allminions[0].IsValidTarget() && Player.Distance(allminions[0]) <= E.Range)
                 {
-                    E.Cast(allminions[0].Position);
+                    E.Cast(allminions[0]);
                 }
             }
         }
