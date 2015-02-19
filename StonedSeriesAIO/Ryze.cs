@@ -98,6 +98,11 @@ namespace StonedSeriesAIO
             Config.SubMenu("Combo").AddItem(new MenuItem("UseItems", "Use Items")).SetValue(true);
             Config.SubMenu("Combo").AddItem(new MenuItem("ActiveCombo", "Combo!").SetValue(new KeyBind(32, KeyBindType.Press)));
 
+            Config.AddSubMenu(new Menu("Harass", "Harras"));
+            Config.SubMenu("Harass").AddItem(new MenuItem("UseQHarass", "Use Q")).SetValue(true);
+            Config.SubMenu("Harass").AddItem(new MenuItem("UseWHarass", "Use W")).SetValue(false);
+            Config.SubMenu("Harass").AddItem(new MenuItem("UseEHarass", "Use E")).SetValue(false);
+            Config.SubMenu("Harass").AddItem(new MenuItem("ActiveHarass", "Harass!").SetValue(new KeyBind("A".ToCharArray()[0], KeyBindType.Press)));
             
             Config.AddSubMenu(new Menu("Jungle Clear", "Jungle"));
             Config.SubMenu("Jungle").AddItem(new MenuItem("UseQClear", "Use Q")).SetValue(true);
@@ -137,6 +142,10 @@ namespace StonedSeriesAIO
             {
                 Combo();
             }
+            if (Config.Item("ActiveHarass").GetValue<KeyBind>().Active)
+            {
+                Harras();
+            }
             if (Config.Item("ActiveClear").GetValue<KeyBind>().Active)
             {
                 JungleClear();
@@ -146,6 +155,25 @@ namespace StonedSeriesAIO
                 WaveClear();
             }
 
+        }
+
+        private static void Harras()
+        {
+            var target = TargetSelector.GetTarget(Q.Range, TargetSelector.DamageType.Magical);
+            if (target == null) return;
+
+            if (Q.IsReady() && target.Distance(Player) <= Q.Range && target.IsValidTarget() && Config.Item("UseQHarass").GetValue<bool>())
+            {
+                Q.Cast(target);
+            }
+            if (W.IsReady() && target.IsValidTarget() && target.Distance(Player) <= W.Range && Config.Item("UseWHarass").GetValue<bool>())
+            {
+                W.Cast(target);
+            }
+            if (E.IsReady() && target.IsValidTarget() && target.Distance(Player) <= E.Range && Config.Item("UseEHarass").GetValue<bool>())
+            {
+                E.Cast(target);
+            }
         }
 
         private static void WaveClear()
