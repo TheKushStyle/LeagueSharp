@@ -30,7 +30,12 @@ namespace StonedSeriesAIO
                 new JarvanIV();
                 Game.PrintChat("<font color='#FF00BF'>Stoned Series {0} Loaded By</font> <font color='#FF0000'>The</font><font color='#FFFF00'>Kush</font><font color='#40FF00'>Style</font>", ChampionSwitch);
                 break;
-                
+
+               case "ryze":
+                new Ryze();
+                Game.PrintChat("<font color='#FF00BF'>Stoned Series {0} Loaded By</font> <font color='#FF0000'>The</font><font color='#FFFF00'>Kush</font><font color='#40FF00'>Style</font>", ChampionSwitch);
+                break;
+
                case "volibear":
                 new Volibear();
                 Game.PrintChat("<font color='#FF00BF'>Stoned Series {0} Loaded By</font> <font color='#FF0000'>The</font><font color='#FFFF00'>Kush</font><font color='#40FF00'>Style</font>", ChampionSwitch);

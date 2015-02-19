@@ -13,13 +13,13 @@ using System.Threading;
 
 namespace StonedSeriesAIO
 {
-    internal class Amumu
+    internal class Ryze
     {
-        public Amumu()
+        public Ryze()
         {
             CustomEvents.Game.OnGameLoad += Game_OnGameLoad;
         }
-        private const string Champion = "Amumu";
+        private const string Champion = "Ryze";
 
         private static Orbwalking.Orbwalker Orbwalker;
 
@@ -50,20 +50,17 @@ namespace StonedSeriesAIO
         private static Items.Item TYM;
 
         private static Obj_AI_Hero Player;
-
         
+
         static void Game_OnGameLoad(EventArgs args)
         {
             Player = ObjectManager.Player;
             if (ObjectManager.Player.BaseSkinName != Champion) return;
 
-            Q = new Spell(SpellSlot.Q, 1000);
-            W = new Spell(SpellSlot.W, 300);
-            E = new Spell(SpellSlot.E, 350);
-            R = new Spell(SpellSlot.R, 525);
-
-            Q.SetSkillshot(0.250f, 80, 2000, true, SkillshotType.SkillshotLine);
-
+            Q = new Spell(SpellSlot.Q, 625);
+            W = new Spell(SpellSlot.W, 600);
+            E = new Spell(SpellSlot.E, 600);
+            R = new Spell(SpellSlot.R, 0);
 
             SpellList.Add(Q);
             SpellList.Add(W);
@@ -77,37 +74,38 @@ namespace StonedSeriesAIO
             BOTK = new Items.Item(3153, 450f);
             CUT = new Items.Item(3144, 450f);
             TYM = new Items.Item(3077, 175f);
+            
 
-            //Menu Amumu
-            Config = new Menu(Champion, "StonedAmumu", true);
+            
+            Config = new Menu(Champion, "StonedRyze", true);
 
-            //Ts
+            
             var targetSelectorMenu = new Menu("Target Selector", "Target Selector");
             TargetSelector.AddToMenu(targetSelectorMenu);
             Config.AddSubMenu(targetSelectorMenu);
 
-            //orb
+            
             Config.AddSubMenu(new Menu("Orbwalking", "Orbwalking"));
             Orbwalker = new Orbwalking.Orbwalker(Config.SubMenu("Orbwalking"));
 
-            //Combo Menu
+            
             Config.AddSubMenu(new Menu("Combo", "Combo"));
             Config.SubMenu("Combo").AddItem(new MenuItem("UseQCombo", "Use Q")).SetValue(true);
             Config.SubMenu("Combo").AddItem(new MenuItem("UseWCombo", "Use W")).SetValue(true);
             Config.SubMenu("Combo").AddItem(new MenuItem("UseECombo", "Use E")).SetValue(true);
+            Config.SubMenu("Combo").AddItem(new MenuItem("UseRCombo", "Use R")).SetValue(true);
+            Config.SubMenu("Combo").AddItem(new MenuItem("RHP", "Hp to use ult").SetValue(new Slider(0, 100, 0)));
             Config.SubMenu("Combo").AddItem(new MenuItem("UseItems", "Use Items")).SetValue(true);
-            Config.SubMenu("Combo").AddItem(new MenuItem("AutoR", "Auto R")).SetValue(true);
-            Config.SubMenu("Combo").AddItem(new MenuItem("CountR", "Num of Enemy in Range to Ult").SetValue(new Slider(1, 5, 0)));
             Config.SubMenu("Combo").AddItem(new MenuItem("ActiveCombo", "Combo!").SetValue(new KeyBind(32, KeyBindType.Press)));
 
-            //JungleClear
+            
             Config.AddSubMenu(new Menu("Jungle Clear", "Jungle"));
             Config.SubMenu("Jungle").AddItem(new MenuItem("UseQClear", "Use Q")).SetValue(true);
             Config.SubMenu("Jungle").AddItem(new MenuItem("UseWClear", "Use W")).SetValue(true);
             Config.SubMenu("Jungle").AddItem(new MenuItem("UseEClear", "Use E")).SetValue(true);
             Config.SubMenu("Jungle").AddItem(new MenuItem("ActiveClear", "Jungle Key").SetValue(new KeyBind("V".ToCharArray()[0], KeyBindType.Press)));
 
-            //WaveClear
+            
             Config.AddSubMenu(new Menu("Wave Clear", "Wave"));
             Config.SubMenu("Wave").AddItem(new MenuItem("UseQWave", "Use Q")).SetValue(true);
             Config.SubMenu("Wave").AddItem(new MenuItem("UseWWave", "Use W")).SetValue(true);
@@ -115,13 +113,10 @@ namespace StonedSeriesAIO
             Config.SubMenu("Wave").AddItem(new MenuItem("ActiveWave", "WaveClear Key").SetValue(new KeyBind("V".ToCharArray()[0], KeyBindType.Press)));
 
 
-
-            //Drawings
             Config.AddSubMenu(new Menu("Drawings", "Drawings"));
             Config.SubMenu("Drawings").AddItem(new MenuItem("DrawQ", "Draw Q")).SetValue(true);
             Config.SubMenu("Drawings").AddItem(new MenuItem("DrawW", "Draw W")).SetValue(true);
             Config.SubMenu("Drawings").AddItem(new MenuItem("DrawE", "Draw E")).SetValue(true);
-            Config.SubMenu("Drawings").AddItem(new MenuItem("DrawR", "Draw R")).SetValue(true);
             Config.SubMenu("Drawings").AddItem(new MenuItem("CircleLag", "Lag Free Circles").SetValue(true));
             Config.SubMenu("Drawings").AddItem(new MenuItem("CircleThickness", "Circles Thickness").SetValue(new Slider(1, 10, 1)));
 
@@ -130,9 +125,6 @@ namespace StonedSeriesAIO
             Game.OnGameUpdate += OnGameUpdate;
             Drawing.OnDraw += OnDraw;
 
-
-
-            Game.PrintChat("<font color='#FF00BF'>Stoned Amumu Loaded By</font> <font color='#FF0000'>The</font><font color='#FFFF00'>Kush</font><font color='#40FF00'>Style</font>");
         }
 
         private static void OnGameUpdate(EventArgs args)
@@ -173,27 +165,19 @@ namespace StonedSeriesAIO
                     Q.Cast(minions[0].Position);
                 }
 
-                if (useW && W.IsReady() && minions[0].IsValidTarget())
+                if (useW && W.IsReady() && minions[0].IsValidTarget() && Player.Distance(minions[0]) <= W.Range)
                 {
-                    if (Player.Distance(minions[0]) <= W.Range && (Player.Spellbook.GetSpell(SpellSlot.W).ToggleState == 1))
-                    {
-                        W.Cast();
-                    }
-                    else if (Player.Distance(minions[0]) > W.Range && (Player.Spellbook.GetSpell(SpellSlot.W).ToggleState == 2))
-                    {
-                        W.Cast();
-                    }
-
+                    W.Cast(minions[0].Position);
                 }
 
                 if (useE && E.IsReady() && minions[0].IsValidTarget() && Player.Distance(minions[0]) <= E.Range)
                 {
-                    E.Cast();
+                    E.Cast(minions[0].Position);
                 }
             }
         }
 
-        private static void JungleClear() //Credits To Flapperdoodle! 
+        private static void JungleClear()
         {
             var useQ = Config.Item("UseQClear").GetValue<bool>();
             var useW = Config.Item("UseWClear").GetValue<bool>();
@@ -208,22 +192,14 @@ namespace StonedSeriesAIO
                     Q.Cast(allminions[0].Position);
                 }
 
-                if (useW && W.IsReady() && allminions[0].IsValidTarget())
+                if (useW && W.IsReady() && allminions[0].IsValidTarget() && Player.Distance(allminions[0]) <= W.Range)
                 {
-                    if (Player.Distance(allminions[0]) <= W.Range && (Player.Spellbook.GetSpell(SpellSlot.W).ToggleState == 1))
-                    {
-                        W.Cast();
-                    }
-                    else if (Player.Distance(allminions[0]) > W.Range && (Player.Spellbook.GetSpell(SpellSlot.W).ToggleState == 2))
-                    {
-                        W.Cast();
-                    }
-
+                    W.Cast(allminions[0].Position);
                 }
 
                 if (useE && E.IsReady() && allminions[0].IsValidTarget() && Player.Distance(allminions[0]) <= E.Range)
                 {
-                    E.Cast();
+                    E.Cast(allminions[0].Position);
                 }
             }
         }
@@ -235,34 +211,23 @@ namespace StonedSeriesAIO
             var target = TargetSelector.GetTarget(Q.Range, TargetSelector.DamageType.Magical);
             if (target == null) return;
 
-            //Combo
-            if (Player.Distance(target) <= Q.Range && Q.IsReady() && (Config.Item("UseQCombo").GetValue<bool>()))
+            if (Q.IsReady() && target.Distance(Player) <= Q.Range && target.IsValidTarget() && Config.Item("UseQCombo").GetValue<bool>())
             {
-
                 Q.Cast(target);
-
             }
-            if (W.IsReady() && (Player.Spellbook.GetSpell(SpellSlot.W).ToggleState == 1) && (Config.Item("UseWCombo").GetValue<bool>()))
-                if (Player.ServerPosition.Distance(target.Position) < W.Range)
-                {
-
-                    W.Cast();
-
-                }
-            if (W.IsReady() && (Player.Spellbook.GetSpell(SpellSlot.W).ToggleState == 2) && (Config.Item("UseWCombo").GetValue<bool>()))
-                if (Player.ServerPosition.Distance(target.Position) > W.Range)
-                {
-
-
-                    W.Cast();
-
-                }
-            if (Player.Distance(target) <= E.Range && E.IsReady() && (Config.Item("UseECombo").GetValue<bool>()))
+            if (W.IsReady() && target.IsValidTarget() && target.Distance(Player) <= W.Range && Config.Item("UseWCombo").GetValue<bool>())
             {
-
-                E.Cast();
-
+                W.Cast(target);
             }
+            if (E.IsReady() && target.IsValidTarget() && target.Distance(Player) <= E.Range && Config.Item("UseECombo").GetValue<bool>())
+            {
+                E.Cast(target);
+            }
+            if (R.IsReady() && target.IsValidTarget() && Player.HealthPercentage() <= Config.Item("RHP").GetValue<Slider>().Value && Config.Item("UseRCombo").GetValue<bool>())
+            {
+                R.Cast();
+            }
+
             if (Config.Item("UseItems").GetValue<bool>())
             {
                 if (Player.Distance(target) <= RDO.Range)
@@ -294,37 +259,12 @@ namespace StonedSeriesAIO
                     TYM.Cast(target);
                 }
             }
-            if (Config.Item("AutoR").GetValue<bool>())
-            {
-
-                if (GetNumberHitByR(target) >= Config.Item("CountR").GetValue<Slider>().Value)
-                {
-                    R.Cast(target, Config.Item("Packet").GetValue<bool>());
-                }
-            }
-
-
         }
-
-        private static int GetNumberHitByR(Obj_AI_Base target) // Credits to Trelli For helping me with this one!
-        {
-            int totalHit = 0;
-            foreach (Obj_AI_Hero current in ObjectManager.Get<Obj_AI_Hero>())
-            {
-                if (current.IsEnemy && Vector3.Distance(Player.Position, current.Position) <= R.Range)
-                {
-                    totalHit = totalHit + 1;
-                }
-            }
-            return totalHit;
-        }
-
-
 
 
         private static void OnDraw(EventArgs args)
         {
-            if (Config.Item("CircleLag").GetValue<bool>()) // Credits to SKOBOL
+            if (Config.Item("CircleLag").GetValue<bool>())
             {
                 if (Config.Item("DrawQ").GetValue<bool>())
                 {
@@ -341,12 +281,8 @@ namespace StonedSeriesAIO
                     Render.Circle.DrawCircle(ObjectManager.Player.Position, E.Range, System.Drawing.Color.White,
                         Config.Item("CircleThickness").GetValue<Slider>().Value);
                 }
-                if (Config.Item("DrawR").GetValue<bool>())
-                {
-                    Render.Circle.DrawCircle(ObjectManager.Player.Position, R.Range, System.Drawing.Color.White,
-                        Config.Item("CircleThickness").GetValue<Slider>().Value);
-                }
-            }
+              }
+
             else
             {
                 if (Config.Item("DrawQ").GetValue<bool>())
@@ -361,11 +297,6 @@ namespace StonedSeriesAIO
                 {
                     Drawing.DrawCircle(ObjectManager.Player.Position, E.Range, System.Drawing.Color.White);
                 }
-                if (Config.Item("DrawR").GetValue<bool>())
-                {
-                    Drawing.DrawCircle(ObjectManager.Player.Position, R.Range, System.Drawing.Color.White);
-                }
-
             }
         }
     }
