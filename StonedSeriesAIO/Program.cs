@@ -16,6 +16,11 @@ namespace StonedSeriesAIO
 
            switch(ChampionSwitch)
            {
+               case "akali":
+                   new Akali();
+                   Game.PrintChat("<font color='#FF00BF'>Stoned Series {0} Loaded By</font> <font color='#FF0000'>The</font><font color='#FFFF00'>Kush</font><font color='#40FF00'>Style</font>", ChampionSwitch);
+                   break;
+
                case "amumu":
                 new Amumu();
                 Game.PrintChat("<font color='#FF00BF'>Stoned Series {0} Loaded By</font> <font color='#FF0000'>The</font><font color='#FFFF00'>Kush</font><font color='#40FF00'>Style</font>",ChampionSwitch);
