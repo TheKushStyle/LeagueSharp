@@ -111,13 +111,13 @@ namespace StonedSeriesAIO
 
             Config.AddToMainMenu();
 
-            Game.OnGameUpdate += GameOnGameUpdate;
+            Game.OnUpdate += OnUpdate;
             Drawing.OnDraw += OnDraw;
             
             Game.PrintChat("<font color='#FF00BF'>Stoned Volibear Loaded By</font> <font color='#FF0000'>The</font><font color='#FFFF00'>Kush</font><font color='#40FF00'>Style</font>");
         }
 
-        private static void GameOnGameUpdate(EventArgs args)
+        private static void OnUpdate(EventArgs args)
         {
             Player = ObjectManager.Player;
 

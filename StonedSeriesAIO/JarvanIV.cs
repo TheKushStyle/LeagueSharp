@@ -89,7 +89,7 @@ namespace StonedSeriesAIO
 
             Config.AddToMainMenu();
 
-            Game.OnGameUpdate += OnGameUpdate;
+            Game.OnUpdate += OnUpdate;
             Drawing.OnDraw += OnDraw;
 
             //Obj_AI_Hero.OnCreate += OnCreateObj;
@@ -111,7 +111,7 @@ namespace StonedSeriesAIO
 
 
 
-        private static void OnGameUpdate(EventArgs args)
+        private static void OnUpdate(EventArgs args)
         {
             if (Config.Item("EQmouse").GetValue<KeyBind>().Active)
             {
