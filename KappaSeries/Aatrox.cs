@@ -231,14 +231,14 @@ namespace KappaSeries
         }
 
         
-        private static void Towerq(Obj_AI_Base t)
+        private static void Towerq()
         {
             var allyturret = ObjectManager.Get<Obj_AI_Turret>().First(obj => obj.IsAlly && obj.Distance(_player) <= 775f);
             var minUnderTur = MinionManager.GetMinions(allyturret.ServerPosition, 775, MinionTypes.All, MinionTeam.Enemy);
 
             if (allyturret != null && minUnderTur == null)
             {
-                _q.Cast(t.ServerPosition);
+                _q.Cast(allyturret.ServerPosition);
             }
         }
 
