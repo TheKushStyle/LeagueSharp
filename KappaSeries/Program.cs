@@ -1,24 +1,44 @@
 ﻿using LeagueSharp;
+using LeagueSharp.Common;
+using System;
 
 
 namespace KappaSeries
 {
-    internal class Program
+    class Program
     {
-        private static void Main(string[] args)
+        static void Main(string[] args)
         {
-            string CS = ObjectManager.Player.ChampionName.ToString();
-            Game.PrintChat("<font color='#FF0000'>Feel free to donate to TheKushStyle@gmail.com <3 </font>");
-            switch (CS)
-            {
-                case "Aatrox":
-                    new Aatrox();
-                    Game.PrintChat("<font color='#00FF15'>Kappa Series Loaded : {0}", CS);
-                    break;
+            CustomEvents.Game.OnGameLoad += OnGameLoad;
+            
+        }
 
-                default:
-                    Game.PrintChat("<font color='#00FF15'>Kappa Series Doesn't Support : {0}", CS);
-                    break;
+        static void OnGameLoad(EventArgs args)
+        {
+            try
+            {
+                var cs = ObjectManager.Player.ChampionName;
+                Game.PrintChat("<font color='#FF0000'>Feel free to donate to TheKushStyle@gmail.com <3 </font>");
+                switch (cs)
+                {
+                    case "Aatrox":
+                        new Aatrox();
+                        Game.PrintChat("<font color='#00FF15'>Kappa Series Loaded : {0}", cs);
+                        break;
+
+                    case "Ahri":
+                        new Ahri();
+                        Game.PrintChat("<font color='#00FF15'>Kappa Series Loaded : {0}", cs);
+                        break;
+
+                    default:
+                        Game.PrintChat("<font color='#00FF15'>Kappa Series Doesn't Support : {0}", cs);
+                        break;
+                }
+            }
+            catch (Exception e)
+            {
+            Console.WriteLine(e);
             }
         }
     }

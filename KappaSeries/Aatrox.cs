@@ -7,7 +7,7 @@ using LeagueSharp.Common.Data;
 
 namespace KappaSeries
 {
-    internal class Aatrox
+    class Aatrox
     {
         public Aatrox()
         {
@@ -236,9 +236,12 @@ namespace KappaSeries
             var allyturret = ObjectManager.Get<Obj_AI_Turret>().First(obj => obj.IsAlly && obj.Distance(_player) <= 775f);
             var minUnderTur = MinionManager.GetMinions(allyturret.ServerPosition, 775, MinionTypes.All, MinionTeam.Enemy);
 
-            if (allyturret != null && minUnderTur == null)
+            foreach (var target in ObjectManager.Get<Obj_AI_Hero>().Where(target => target.IsValidTarget(_e.Range)))
             {
-                _q.Cast(allyturret.ServerPosition);
+                if (allyturret != null && minUnderTur == null && target.IsValidTarget())
+                {
+                    _q.Cast(target);
+                }
             }
         }
 
