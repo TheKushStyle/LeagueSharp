@@ -10,7 +10,7 @@ namespace KappaSeries
     {
         public Ahri()
         {
-            CustomEvents.Game.OnGameLoad += Game_OnGameLoad;
+            Load();
         }
 
         private static Orbwalking.Orbwalker _orbwalker;
@@ -23,7 +23,7 @@ namespace KappaSeries
         private static Menu _cfg;
         private static Obj_AI_Hero _player;
 
-        private void Game_OnGameLoad(EventArgs args)
+        private void Load()
         {
             _player = ObjectManager.Player;
 
@@ -53,9 +53,8 @@ namespace KappaSeries
 
             _cfg.AddSubMenu(new Menu("Combo", "Combo"));
             _cfg.SubMenu("Combo").AddItem(new MenuItem("ActiveCombo", "Combo!").SetValue(new KeyBind(32, KeyBindType.Press)));
-            _cfg.SubMenu("Combo").AddItem(new MenuItem("ComboSwitch", "Combo Switch Key").SetValue(new KeyBind("T".ToCharArray()[0], KeyBindType.Toggle)));
-            _cfg.SubMenu("Combo").AddItem(new MenuItem("ComboMode", "Combo Mode").SetValue(new StringList(new[] { "REQW", "EQW", }, 1)));
-            _cfg.SubMenu("Combo").AddItem(new MenuItem("UseR", "Use R").SetValue(new StringList(new[] { "To Mouse", "To Enemy", "Don't Use" }, 1)));
+            _cfg.SubMenu("Combo").AddItem(new MenuItem("RCombo", "Use R Combo").SetValue(new KeyBind("T".ToCharArray()[0], KeyBindType.Toggle)));
+            _cfg.SubMenu("Combo").AddItem(new MenuItem("UseR", "Usage Of R").SetValue(new StringList(new[] { "To Mouse", "To Enemy", "Don't Use" }, 1)));
 
             _cfg.AddSubMenu(new Menu("Harass", "Harass"));
             _cfg.SubMenu("Harass").AddItem(new MenuItem("ActiveHarass", "Harass!").SetValue(new KeyBind("A".ToCharArray()[0], KeyBindType.Press)));
@@ -96,17 +95,18 @@ namespace KappaSeries
 
             _cfg.AddToMainMenu();
 
-            Game.OnUpdate += OnUpdate;
+            Game.OnUpdate += Game_OnUpdate;
             Drawing.OnDraw += OnDraw;
             Interrupter2.OnInterruptableTarget += OnPossibleToInterrupt;
         }
 
-        private void OnUpdate(EventArgs args)
+        private void Game_OnUpdate(EventArgs args)
         {
             if (_player.IsDead)
             {
                 return;
             }
+
             if (_cfg.Item("ActiveCombo").GetValue<KeyBind>().Active)
             {
                 Combo();
@@ -138,6 +138,7 @@ namespace KappaSeries
             {
                 TowerE();
             }
+            
         }
 
         private void TowerE()
@@ -256,7 +257,7 @@ namespace KappaSeries
 
             if (t.IsValidTarget() && t != null)
             {
-                if (_cfg.Item("ComboMode").GetValue<StringList>().SelectedIndex == 0)//REQW
+                if (_cfg.Item("RCombo").IsActive())//REQW
                 {
                     if (_cfg.Item("UseR").GetValue<StringList>().SelectedIndex == 0)
                     {
@@ -265,10 +266,6 @@ namespace KappaSeries
                     if (_cfg.Item("UseR").GetValue<StringList>().SelectedIndex == 1)
                     {
                         _r.Cast(t.ServerPosition);
-                    }
-                    if (_cfg.Item("UseR").GetValue<StringList>().SelectedIndex == 2)
-                    {
-                        return;
                     }
 
                     if (_player.Distance(t) <= _e.Range && _e.IsReady() && _e.MinHitChance >= HitChance.Medium)
@@ -286,7 +283,7 @@ namespace KappaSeries
                         _w.Cast();
                     }
                 }
-                if (_cfg.Item("ComboMode").GetValue<StringList>().SelectedIndex == 1)//EQW
+                else 
                 {
                     if (_player.Distance(t) <= _e.Range && _e.IsReady() && _e.MinHitChance >= HitChance.Medium)
                     {
