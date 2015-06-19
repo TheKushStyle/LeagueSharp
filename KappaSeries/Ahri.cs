@@ -55,6 +55,7 @@ namespace KappaSeries
             _cfg.SubMenu("Combo").AddItem(new MenuItem("ActiveCombo", "Combo!").SetValue(new KeyBind(32, KeyBindType.Press)));
             _cfg.SubMenu("Combo").AddItem(new MenuItem("RCombo", "Use R Combo").SetValue(new KeyBind("T".ToCharArray()[0], KeyBindType.Toggle)));
             _cfg.SubMenu("Combo").AddItem(new MenuItem("UseR", "Usage Of R").SetValue(new StringList(new[] { "To Mouse", "To Enemy", "Don't Use" }, 1)));
+            _cfg.SubMenu("Combo").AddItem(new MenuItem("RKill", "Only Use R When Killable").SetValue(true));
 
             _cfg.AddSubMenu(new Menu("Harass", "Harass"));
             _cfg.SubMenu("Harass").AddItem(new MenuItem("ActiveHarass", "Harass!").SetValue(new KeyBind("A".ToCharArray()[0], KeyBindType.Press)));
@@ -259,13 +260,31 @@ namespace KappaSeries
             {
                 if (_cfg.Item("RCombo").IsActive())//REQW
                 {
-                    if (_cfg.Item("UseR").GetValue<StringList>().SelectedIndex == 0)
+                    if (!_cfg.Item("RKill").IsActive())
                     {
-                        _r.Cast(Game.CursorPos);
-                    }
+                        if (_cfg.Item("UseR").GetValue<StringList>().SelectedIndex == 0 )
+                        {
+                            _r.Cast(Game.CursorPos);
+                        }
+
                     if (_cfg.Item("UseR").GetValue<StringList>().SelectedIndex == 1)
+
+                        {
+                            _r.Cast(t.ServerPosition);
+                        }
+                    }
+
+                    if (_cfg.Item("RKill").IsActive() && (((_r.GetDamage(t) * 3) + _q.GetDamage(t) + _w.GetDamage(t) + _e.GetDamage(t)) >= t.Health) && _q.IsReady() && _w.IsReady() && _e.IsReady())
                     {
-                        _r.Cast(t.ServerPosition);
+                        if (_cfg.Item("UseR").GetValue<StringList>().SelectedIndex == 0)
+                        {
+                            _r.Cast(Game.CursorPos);
+                        }
+
+                        if (_cfg.Item("UseR").GetValue<StringList>().SelectedIndex == 1)
+                        {
+                            _r.Cast(t.ServerPosition);
+                        }
                     }
 
                     if (_player.Distance(t) <= _e.Range && _e.IsReady() && _e.MinHitChance >= HitChance.Medium)
@@ -282,6 +301,7 @@ namespace KappaSeries
                     {
                         _w.Cast();
                     }
+                    
                 }
                 else 
                 {
