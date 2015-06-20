@@ -19,6 +19,7 @@ namespace KappaSeries
             {
                 var cs = ObjectManager.Player.ChampionName;
                 Game.PrintChat("<font color='#FF0000'>Feel free to donate to TheKushStyle@gmail.com <3 </font>");
+
                 switch (cs)
                 {
                     case "Aatrox":
@@ -28,6 +29,11 @@ namespace KappaSeries
 
                     case "Ahri":
                         new Ahri();
+                        Game.PrintChat("<font color='#00FF15'>Kappa Series Loaded : {0}", cs);
+                        break;
+
+                    case "Volibear":
+                        new Volibear();
                         Game.PrintChat("<font color='#00FF15'>Kappa Series Loaded : {0}", cs);
                         break;
 
