@@ -1,6 +1,7 @@
 ﻿using LeagueSharp;
 using LeagueSharp.Common;
 using System;
+using System.Drawing;
 
 
 namespace KappaSeries
@@ -18,27 +19,29 @@ namespace KappaSeries
             try
             {
                 var cs = ObjectManager.Player.ChampionName;
-                Game.PrintChat("<font color='#FF0000'>Feel free to donate to TheKushStyle@gmail.com <3 </font>");
-
+                Notifications.AddNotification("Feel free to donate to TheKushStyle@gmail.com <3 ").SetTextColor(Color.MediumVioletRed);
+                var say = ("Kappa Series Loaded : ");
+                var def = ("Kappa Series Doesn't Support : ");
                 switch (cs)
                 {
+
                     case "Aatrox":
                         new Aatrox();
-                        Game.PrintChat("<font color='#00FF15'>Kappa Series Loaded : {0}", cs);
+                        Notifications.AddNotification(say + cs, 5000).SetTextColor(Color.LawnGreen);
                         break;
 
                     case "Ahri":
                         new Ahri();
-                        Game.PrintChat("<font color='#00FF15'>Kappa Series Loaded : {0}", cs);
+                        Notifications.AddNotification(say + cs, 5000).SetTextColor(Color.LawnGreen);
                         break;
 
                     case "Volibear":
                         new Volibear();
-                        Game.PrintChat("<font color='#00FF15'>Kappa Series Loaded : {0}", cs);
+                        Notifications.AddNotification(say + cs, 5000).SetTextColor(Color.LawnGreen);
                         break;
 
                     default:
-                        Game.PrintChat("<font color='#00FF15'>Kappa Series Doesn't Support : {0}", cs);
+                        Notifications.AddNotification(say + def, 5000).SetTextColor(Color.Crimson);
                         break;
                 }
             }
