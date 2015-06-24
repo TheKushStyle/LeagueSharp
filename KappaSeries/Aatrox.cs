@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using LeagueSharp;
 using LeagueSharp.Common;
-using LeagueSharp.Common.Data;
+using ItemData = LeagueSharp.Common.Data.ItemData;
 
 namespace KappaSeries
 {
