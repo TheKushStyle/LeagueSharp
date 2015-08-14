@@ -15,7 +15,8 @@ namespace LeeSin_Mechanics_Helper
         static void Main(string[] args)
         {
             CustomEvents.Game.OnGameLoad += Game_OnGameLoad;
-            Console.WriteLine(Player.ChampionName);
+            Notifications.AddNotification("Feel free to donate to TheKushStyle@gmail.com <3 ");
+            Notifications.AddNotification("Leesin Mechanics Helper Loaded");
         }
 
         private static void Game_OnGameLoad(EventArgs args)
@@ -37,13 +38,15 @@ namespace LeeSin_Mechanics_Helper
 
            _cfg.AddSubMenu(new Menu("RQQ Settings", "RQQ Settings"));
            _cfg.SubMenu("RQQ Settings").AddItem(new MenuItem("ActiveRQQ", "RQQ").SetValue(new KeyBind(32, KeyBindType.Press)));
-           _cfg.SubMenu("RQQ Settings").AddItem(new MenuItem("move", "Move to mouse").SetValue(false));
-           //_cfg.SubMenu("RQQ Settings").AddItem(new MenuItem("UseQ1", "Use Q1").SetValue(true));
-           _//cfg.SubMenu("RQQ Settings").AddItem(new MenuItem("UseQ2", "Use Q2").SetValue(true));
+           _cfg.SubMenu("RQQ Settings").AddItem(new MenuItem("moveRQQ", "Move to mouse").SetValue(false));
+           _cfg.SubMenu("RQQ Settings").AddItem(new MenuItem("UseQ1RQQ", "Use Q1").SetValue(true));
+           _cfg.SubMenu("RQQ Settings").AddItem(new MenuItem("UseQ2RQQ", "Use Q2").SetValue(true));
 
            _cfg.AddSubMenu(new Menu("Flash R Settings", "Flash R Settings"));
            _cfg.SubMenu("Flash R Settings").AddItem(new MenuItem("ActiveFR", "Flash R").SetValue(new KeyBind(40, KeyBindType.Press)));
-
+           _cfg.SubMenu("RQQ Settings").AddItem(new MenuItem("UseQ1RFQQ", "Use Q1").SetValue(true));
+           _cfg.SubMenu("RQQ Settings").AddItem(new MenuItem("UseQ2RFQQ", "Use Q2").SetValue(true));
+           _cfg.SubMenu("RQQ Settings").AddItem(new MenuItem("moveRFQQ", "Move to mouse").SetValue(false));
             _cfg.AddToMainMenu();
 
             Game.OnUpdate += Game_OnUpdate;
@@ -53,7 +56,7 @@ namespace LeeSin_Mechanics_Helper
 
         private static void Game_OnUpdate(EventArgs args)
         {
-            if (Combo == false && _cfg.Item("move").IsActive() && _cfg.Item("ActiveRQQ").GetValue<KeyBind>().Active)
+            if (ComboRqq == false && _cfg.Item("moveRQQ").IsActive() && _cfg.Item("ActiveRQQ").GetValue<KeyBind>().Active)
             {
                 Player.IssueOrder(GameObjectOrder.MoveTo, Game.CursorPos);
             }
@@ -67,33 +70,54 @@ namespace LeeSin_Mechanics_Helper
                 FlashR();
             }
         }
-
+        public static bool ComboRfqq = false;
         private static void FlashR()
         {
             var target = TargetSelector.GetTarget(R.Range, TargetSelector.DamageType.Physical);
-
+           
             if (target.Distance(Player) <= R.Range && R.IsReady() && ObjectManager.Player.GetSpellSlot("SummonerFlash").IsReady())
             {
+                if (ComboRfqq == false && _cfg.Item("moveRFQQ").IsActive() && _cfg.Item("ActiveRFQQ").GetValue<KeyBind>().Active)
+                {
+                    Player.IssueOrder(GameObjectOrder.MoveTo, Game.CursorPos);
+                }
+                ComboRqq = true;
                 R.CastOnUnit(target);
                 ObjectManager.Player.Spellbook.CastSpell(ObjectManager.Player.GetSpellSlot("SummonerFlash"), Game.CursorPos);
+                if (_cfg.Item("UseQ1RFQQ").IsActive())
+                {
+                    Q.Cast(target.ServerPosition);
+                }
+
+                if (_cfg.Item("UseQ2RFQQ").IsActive())
+                {
+                    Q.Cast();
+                }
+                ComboRqq = false;
             }
 
         }
-        public static bool Combo = false;
+        public static bool ComboRqq = false;
         private static void Rqq()
         {
             var target = TargetSelector.GetTarget(R.Range, TargetSelector.DamageType.Physical);
 
             if (target.Distance(Player) <= R.Range && R.IsReady() && Q.IsReady() && target.IsValidTarget())
             {
-                Combo = true;
+                ComboRqq = true;
                 R.CastOnUnit(target);
+                if (_cfg.Item("UseQ1RQQ").IsActive())
+                {
+                    Q.Cast(target.ServerPosition);
+                }
 
-                Q.Cast(target.ServerPosition);
 
-                Q.Cast();
+                if (_cfg.Item("UseQ2RQQ").IsActive())
+                {
+                    Q.Cast();
+                }
 
-                Combo = false;
+                ComboRqq = false;
             }
 
         }
