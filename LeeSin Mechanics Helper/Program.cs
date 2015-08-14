@@ -74,13 +74,14 @@ namespace LeeSin_Mechanics_Helper
         private static void FlashR()
         {
             var target = TargetSelector.GetTarget(R.Range, TargetSelector.DamageType.Physical);
-           
+
+            if (ComboRfqq == false && _cfg.Item("moveRFQQ").IsActive() && _cfg.Item("ActiveRFQQ").GetValue<KeyBind>().Active)
+            {
+                Player.IssueOrder(GameObjectOrder.MoveTo, Game.CursorPos);
+            }
+
             if (target.Distance(Player) <= R.Range && R.IsReady() && ObjectManager.Player.GetSpellSlot("SummonerFlash").IsReady())
             {
-                if (ComboRfqq == false && _cfg.Item("moveRFQQ").IsActive() && _cfg.Item("ActiveRFQQ").GetValue<KeyBind>().Active)
-                {
-                    Player.IssueOrder(GameObjectOrder.MoveTo, Game.CursorPos);
-                }
                 ComboRqq = true;
                 R.CastOnUnit(target);
                 ObjectManager.Player.Spellbook.CastSpell(ObjectManager.Player.GetSpellSlot("SummonerFlash"), Game.CursorPos);
