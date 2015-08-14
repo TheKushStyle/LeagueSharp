@@ -5,11 +5,11 @@ using System.Runtime.InteropServices;
 // General Information about an assembly is controlled through the following 
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("LeeInstantRQQ")]
+[assembly: AssemblyTitle("LeeSin Mechanics Helper")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("TEAM OS")]
-[assembly: AssemblyProduct("LeeInstantRQQ")]
+[assembly: AssemblyProduct("LeeSin Mechanics Helper")]
 [assembly: AssemblyCopyright("Copyright © TEAM OS 2015")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
@@ -20,7 +20,7 @@ using System.Runtime.InteropServices;
 [assembly: ComVisible(false)]
 
 // The following GUID is for the ID of the typelib if this project is exposed to COM
-[assembly: Guid("e0737190-8fc4-4267-96ad-fceb1bd6c569")]
+[assembly: Guid("4c18af16-b5d1-4f7b-b24c-01ccd5c22a74")]
 
 // Version information for an assembly consists of the following four values:
 //
