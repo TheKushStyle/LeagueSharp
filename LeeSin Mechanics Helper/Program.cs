@@ -44,9 +44,9 @@ namespace LeeSin_Mechanics_Helper
 
            _cfg.AddSubMenu(new Menu("Flash R Settings", "Flash R Settings"));
            _cfg.SubMenu("Flash R Settings").AddItem(new MenuItem("ActiveFR", "Flash R").SetValue(new KeyBind(40, KeyBindType.Press)));
-           _cfg.SubMenu("RQQ Settings").AddItem(new MenuItem("UseQ1RFQQ", "Use Q1").SetValue(true));
-           _cfg.SubMenu("RQQ Settings").AddItem(new MenuItem("UseQ2RFQQ", "Use Q2").SetValue(true));
-           _cfg.SubMenu("RQQ Settings").AddItem(new MenuItem("moveRFQQ", "Move to mouse").SetValue(false));
+           _cfg.SubMenu("Flash R Settings").AddItem(new MenuItem("UseQ1RFQQ", "Use Q1").SetValue(true));
+           _cfg.SubMenu("Flash R Settings").AddItem(new MenuItem("UseQ2RFQQ", "Use Q2").SetValue(true));
+           _cfg.SubMenu("Flash R Settings").AddItem(new MenuItem("moveRFQQ", "Move to mouse").SetValue(false));
             _cfg.AddToMainMenu();
 
             Game.OnUpdate += Game_OnUpdate;
