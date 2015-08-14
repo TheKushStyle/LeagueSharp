@@ -75,14 +75,15 @@ namespace LeeSin_Mechanics_Helper
         {
             var target = TargetSelector.GetTarget(R.Range, TargetSelector.DamageType.Physical);
 
-            if (ComboRfqq == false && _cfg.Item("moveRFQQ").IsActive() && _cfg.Item("ActiveRFQQ").GetValue<KeyBind>().Active)
+            if (ComboRfqq == false && _cfg.Item("moveRFQQ").IsActive() && _cfg.Item("ActiveFR").GetValue<KeyBind>().Active)
             {
                 Player.IssueOrder(GameObjectOrder.MoveTo, Game.CursorPos);
             }
 
             if (target.Distance(Player) <= R.Range && R.IsReady() && ObjectManager.Player.GetSpellSlot("SummonerFlash").IsReady())
             {
-                ComboRqq = true;
+                ComboRfqq = true;
+
                 R.CastOnUnit(target);
                 ObjectManager.Player.Spellbook.CastSpell(ObjectManager.Player.GetSpellSlot("SummonerFlash"), Game.CursorPos);
                 if (_cfg.Item("UseQ1RFQQ").IsActive())
@@ -94,7 +95,7 @@ namespace LeeSin_Mechanics_Helper
                 {
                     Q.Cast();
                 }
-                ComboRqq = false;
+                ComboRfqq = false;
             }
 
         }
