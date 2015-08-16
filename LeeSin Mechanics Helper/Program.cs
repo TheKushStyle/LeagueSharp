@@ -28,7 +28,7 @@ namespace LeeSin_Mechanics_Helper
             Q = new Spell(SpellSlot.Q, 1100);
             R = new Spell(SpellSlot.R, 375);
 
-           R.SetSkillshot(Q.Instance.SData.SpellCastTime, Q.Instance.SData.LineWidth,Q.Instance.SData.MissileSpeed, true, SkillshotType.SkillshotLine);
+           Q.SetSkillshot(Q.Instance.SData.SpellCastTime, Q.Instance.SData.LineWidth,Q.Instance.SData.MissileSpeed, true, SkillshotType.SkillshotLine);
 
            _cfg = new Menu("Leesin Mechanics helper","Lee Mechanics Helper", true);
 
