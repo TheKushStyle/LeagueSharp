@@ -71,6 +71,7 @@ namespace LeeSin_Mechanics_Helper
             }
         }
         public static bool ComboRfqq = false;
+        public static bool QCasted = false;
         private static void FlashR()
         {
             var target = TargetSelector.GetTarget(R.Range, TargetSelector.DamageType.Physical);
@@ -85,11 +86,17 @@ namespace LeeSin_Mechanics_Helper
                 var targetQ = TargetSelector.GetTarget(R.Range, TargetSelector.DamageType.Physical);
                 ComboRfqq = true;
 
-                R.CastOnUnit(target);
+                if (target.IsValidTarget())
+                {
+                    R.CastOnUnit(target);
+                    QCasted = true;
+                }
+                
 
-                if (R.Cast(target) == Spell.CastStates.SuccessfullyCasted)
+                if (QCasted == true)
                 {
                     ObjectManager.Player.Spellbook.CastSpell(ObjectManager.Player.GetSpellSlot("SummonerFlash"), Game.CursorPos);
+                    QCasted = false;
                 }
                 
                 
