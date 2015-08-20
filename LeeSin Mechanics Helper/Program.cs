@@ -80,14 +80,19 @@ namespace LeeSin_Mechanics_Helper
                 Player.IssueOrder(GameObjectOrder.MoveTo, Game.CursorPos);
             }
 
-            if (target.Distance(Player) <= Q.Range && R.IsReady() && ObjectManager.Player.GetSpellSlot("SummonerFlash").IsReady())
+            if (target.Distance(Player) <= R.Range && R.IsReady() && ObjectManager.Player.GetSpellSlot("SummonerFlash").IsReady())
             {
                 var targetQ = TargetSelector.GetTarget(R.Range, TargetSelector.DamageType.Physical);
                 ComboRfqq = true;
 
                 R.CastOnUnit(target);
-                ObjectManager.Player.Spellbook.CastSpell(ObjectManager.Player.GetSpellSlot("SummonerFlash"), Game.CursorPos);
 
+                if (R.Cast(target) == Spell.CastStates.SuccessfullyCasted)
+                {
+                    ObjectManager.Player.Spellbook.CastSpell(ObjectManager.Player.GetSpellSlot("SummonerFlash"), Game.CursorPos);
+                }
+                
+                
                 if (_cfg.Item("UseQ1RFQQ").IsActive())
                 {
                     Q.Cast(targetQ.ServerPosition);
