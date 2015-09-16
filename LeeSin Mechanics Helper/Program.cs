@@ -1,7 +1,6 @@
 ﻿using System;
 using LeagueSharp;
 using LeagueSharp.Common;
-using SharpDX;
 
 namespace LeeSin_Mechanics_Helper
 {
@@ -9,7 +8,7 @@ namespace LeeSin_Mechanics_Helper
     {
         public static Spell Q;
         public static Spell R;
-        private static Obj_AI_Hero Player;
+        private static Obj_AI_Hero _player;
         private static Menu _cfg;
 
         static void Main(string[] args)
@@ -22,8 +21,8 @@ namespace LeeSin_Mechanics_Helper
         private static void Game_OnGameLoad(EventArgs args)
         {
 
-            Player = ObjectManager.Player;
-            if (Player.ChampionName != "LeeSin") return;
+            _player = ObjectManager.Player;
+            if (_player.ChampionName != "LeeSin") return;
 
             Q = new Spell(SpellSlot.Q, 1100);
             R = new Spell(SpellSlot.R, 375);
@@ -56,9 +55,9 @@ namespace LeeSin_Mechanics_Helper
 
         private static void Game_OnUpdate(EventArgs args)
         {
-            if (ComboRqq == false && _cfg.Item("moveRQQ").IsActive() && _cfg.Item("ActiveRQQ").GetValue<KeyBind>().Active)
+            if (_cfg.Item("moveRQQ").IsActive() && _cfg.Item("ActiveRQQ").GetValue<KeyBind>().Active)
             {
-                Player.IssueOrder(GameObjectOrder.MoveTo, Game.CursorPos);
+                _player.IssueOrder(GameObjectOrder.MoveTo, Game.CursorPos);
             }
             if (_cfg.Item("ActiveRQQ").GetValue<KeyBind>().Active)
             {
@@ -70,70 +69,56 @@ namespace LeeSin_Mechanics_Helper
                 FlashR();
             }
         }
-        public static bool ComboRfqq = false;
-        public static bool QCasted = false;
+        
         private static void FlashR()
         {
             var target = TargetSelector.GetTarget(R.Range, TargetSelector.DamageType.Physical);
 
-            if (ComboRfqq == false && _cfg.Item("moveRFQQ").IsActive() && _cfg.Item("ActiveFR").GetValue<KeyBind>().Active)
+            if ( _cfg.Item("moveRFQQ").IsActive() && _cfg.Item("ActiveFR").GetValue<KeyBind>().Active)
             {
-                Player.IssueOrder(GameObjectOrder.MoveTo, Game.CursorPos);
+                _player.IssueOrder(GameObjectOrder.MoveTo, Game.CursorPos);
             }
 
-            if (target.Distance(Player) <= R.Range && R.IsReady() && ObjectManager.Player.GetSpellSlot("SummonerFlash").IsReady())
+            if (target.Distance(_player) <= R.Range && R.IsReady() && ObjectManager.Player.GetSpellSlot("SummonerFlash").IsReady() && !_player.IsDashing())
             {
                 var targetQ = TargetSelector.GetTarget(R.Range, TargetSelector.DamageType.Physical);
-                ComboRfqq = true;
 
                 if (target.IsValidTarget())
                 {
                     R.CastOnUnit(target);
-                    QCasted = true;
+                    Utility.DelayAction.Add(500, () => ObjectManager.Player.Spellbook.CastSpell(ObjectManager.Player.GetSpellSlot("SummonerFlash"), Game.CursorPos));
                 }
-                
 
-                if (QCasted == true)
-                {
-                    ObjectManager.Player.Spellbook.CastSpell(ObjectManager.Player.GetSpellSlot("SummonerFlash"), Game.CursorPos);
-                    QCasted = false;
-                }
-                
-                
                 if (_cfg.Item("UseQ1RFQQ").IsActive())
                 {
-                    Q.Cast(targetQ.ServerPosition);
+                    Utility.DelayAction.Add(500, () => Q.Cast(targetQ.ServerPosition));
                 }
 
                 if (_cfg.Item("UseQ2RFQQ").IsActive())
                 {
-                    Q.Cast();
+                   Utility.DelayAction.Add(500, () => Q.Cast());
                 }
-                ComboRfqq = false;
+
             }
 
         }
-        public static bool ComboRqq = false;
+
         private static void Rqq()
         {
             var target = TargetSelector.GetTarget(R.Range, TargetSelector.DamageType.Physical);
 
-            if (target.Distance(Player) <= R.Range && R.IsReady() && Q.IsReady() && target.IsValidTarget())
+            if (target.Distance(_player) <= R.Range && R.IsReady() && Q.IsReady() && target.IsValidTarget())
             {
-                ComboRqq = true;
                 R.CastOnUnit(target);
                 if (_cfg.Item("UseQ1RQQ").IsActive())
                 {
-                    Q.Cast(target.ServerPosition);
+                    Utility.DelayAction.Add(500, () => Q.Cast(target.ServerPosition));
                 }
-
 
                 if (_cfg.Item("UseQ2RQQ").IsActive())
                 {
-                    Q.Cast();
+                    Utility.DelayAction.Add(500, () => Q.Cast());
                 }
-
-                ComboRqq = false;
             }
 
         }
