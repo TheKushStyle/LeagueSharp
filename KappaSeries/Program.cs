@@ -20,8 +20,8 @@ namespace KappaSeries
             {
                 var cs = ObjectManager.Player.ChampionName;
                 Notifications.AddNotification("Feel free to donate to TheKushStyle@gmail.com <3 ").SetTextColor(Color.MediumVioletRed);
-                var say = ("Kappa Series Loaded : ");
-                var def = ("Kappa Series Doesn't Support : ");
+                const string say = ("Kappa Series Loaded : ");
+                const string def = ("Kappa Series Doesn't Support : ");
                 switch (cs)
                 {
 
@@ -32,6 +32,11 @@ namespace KappaSeries
 
                     case "Ahri":
                         new Ahri();
+                        Notifications.AddNotification(say + cs, 5000).SetTextColor(Color.LawnGreen);
+                        break;
+
+                    case "Akali":
+                        new Akali();
                         Notifications.AddNotification(say + cs, 5000).SetTextColor(Color.LawnGreen);
                         break;
 

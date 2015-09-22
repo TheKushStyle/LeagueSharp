@@ -11,7 +11,7 @@ namespace KappaSeries
     class Volibear
     {
         private static Orbwalking.Orbwalker _orbwalker;
-        private static List<Spell> _spellList = new List<Spell>();
+        public static readonly List<Spell> SpellList = new List<Spell>();
         private static Spell _q;
         private static Spell _w;
         private static Spell _e;
@@ -30,7 +30,7 @@ namespace KappaSeries
             Load();
         }
 
-        private void Load()
+        private static void Load()
         {
             _player = ObjectManager.Player;
 
@@ -39,10 +39,10 @@ namespace KappaSeries
             _e = new Spell(SpellSlot.E, 400);
             _r = new Spell(SpellSlot.R, 125);
 
-            _spellList.Add(_q);
-            _spellList.Add(_w);
-            _spellList.Add(_e);
-            _spellList.Add(_r);
+            SpellList.Add(_q);
+            SpellList.Add(_w);
+            SpellList.Add(_e);
+            SpellList.Add(_r);
 
             _rdo = ItemData.Randuins_Omen.GetItem();
             _yoy = ItemData.Youmuus_Ghostblade.GetItem();
@@ -109,7 +109,7 @@ namespace KappaSeries
             Drawing.OnDraw += Drawing_OnDraw;
         }
 
-        private void Drawing_OnDraw(EventArgs args)
+        private static void Drawing_OnDraw(EventArgs args)
         {
             if (_cfg.Item("CircleLag").GetValue<bool>())
             {
@@ -156,7 +156,7 @@ namespace KappaSeries
             }  
         }
 
-        private void Game_OnUpdate(EventArgs args)
+        private static void Game_OnUpdate(EventArgs args)
         {
             if (_player.IsDead)
             {
@@ -193,7 +193,7 @@ namespace KappaSeries
             }
         }
 
-        private void Flee()
+        private static void Flee()
         {
             _player.IssueOrder(GameObjectOrder.MoveTo, Game.CursorPos);
 
@@ -203,7 +203,7 @@ namespace KappaSeries
             }
         }
 
-        private void Laneclear()
+        private static void Laneclear()
         {
             var minion = MinionManager.GetMinions(_player.ServerPosition, _w.Range);
 
@@ -226,7 +226,7 @@ namespace KappaSeries
             }
         }
 
-        private void Jungleclear()
+        private static void Jungleclear()
         {
             var junglemonster = MinionManager.GetMinions(_player.ServerPosition, _w.Range, MinionTypes.All, MinionTeam.Neutral, MinionOrderTypes.MaxHealth);
             if (junglemonster.Count == 0) return;
@@ -262,12 +262,10 @@ namespace KappaSeries
                 _e.Cast();
             }
 
-            if (health < ((maxhealth * wcount) / 100))
+            if (!(health < ((maxhealth*wcount)/100))) return;
+            if (_cfg.Item("HarassW").IsActive() && _player.Distance(t) <= _w.Range && _w.IsReady())
             {
-                if (_cfg.Item("HarassW").IsActive() && _player.Distance(t) <= _w.Range && _w.IsReady())
-                {
-                    _w.Cast(t);
-                }
+                _w.Cast(t);
             }
         }
 
@@ -293,8 +291,7 @@ namespace KappaSeries
                 }
             }
         }
-
-
+        
         private static void Combo()
         {
             var t = TargetSelector.GetTarget(_q.Range, TargetSelector.DamageType.Physical);

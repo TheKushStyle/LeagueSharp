@@ -441,14 +441,14 @@ namespace KappaSeries
                 {
                     if (Items.CanUseItem(bil.Id) && _player.Distance(t) <= bil.Range)
                     {
-                        Items.UseItem(bil.Id);
+                        Items.UseItem(bil.Id, t);
                     }
                 }
                 if (Items.HasItem(botrk.Id))
                 {
                     if (Items.CanUseItem(botrk.Id) && _player.Distance(t) <= botrk.Range)
                     {
-                        Items.UseItem(botrk.Id);
+                        Items.UseItem(botrk.Id, t);
                     }
                 }
             }
