@@ -86,7 +86,7 @@ namespace LeeSin_Mechanics_Helper
                 if (target.IsValidTarget())
                 {
                     R.CastOnUnit(target);
-                    Utility.DelayAction.Add(500, () => ObjectManager.Player.Spellbook.CastSpell(ObjectManager.Player.GetSpellSlot("SummonerFlash"), Game.CursorPos));
+                    Utility.DelayAction.Add(100, () => ObjectManager.Player.Spellbook.CastSpell(ObjectManager.Player.GetSpellSlot("SummonerFlash"), Game.CursorPos));
                 }
 
                 if (_cfg.Item("UseQ1RFQQ").IsActive())
