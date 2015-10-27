@@ -45,6 +45,11 @@ namespace KappaSeries
                         Notifications.AddNotification(say + cs, 5000).SetTextColor(Color.LawnGreen);
                         break;
 
+                    case "DrMundo":
+                        new DrMundo();
+                        Notifications.AddNotification(say + cs, 5000).SetTextColor(Color.LawnGreen);
+                        break;
+
                     default:
                         Notifications.AddNotification(say + def, 5000).SetTextColor(Color.Crimson);
                         break;

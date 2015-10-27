@@ -3,8 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using LeagueSharp;
 using LeagueSharp.Common;
-using Microsoft.Win32;
-using SharpDX;
 
 namespace KappaSeries
 {
@@ -12,7 +10,7 @@ namespace KappaSeries
     {
         public Akali()
         {
-            Load();
+            CustomEvents.Game.OnGameLoad += Load;
         }
 
         private static Orbwalking.Orbwalker _orbwalker;
@@ -28,7 +26,7 @@ namespace KappaSeries
         private static bool ERKill = false;
         private static bool IRKill = false;
 
-        private static void Load()
+        private static void Load(EventArgs args)
         {
             _player = ObjectManager.Player;
 
@@ -239,6 +237,8 @@ namespace KappaSeries
             var minion = MinionManager.GetMinions(_player.ServerPosition, _q.Range);
             var qdmg = _q.GetDamage(minion[0]);
             var edmg = _e.GetDamage(minion[0]);
+            if (minion[0] == null) return;
+
             if (_cfg.Item("UseQFarm").IsActive() && minion[0].Distance(_player) <= _q.Range && minion[0].Health <= qdmg && _q.IsReady())
             {
                 _q.Cast(minion[0]);
@@ -252,6 +252,7 @@ namespace KappaSeries
         private static void Laneclear()
         {
             var minion = MinionManager.GetMinions(_player.ServerPosition, _q.Range);
+            if (minion[0] == null) return;
 
             if (minion.Count < 2)
                 return;
@@ -270,7 +271,7 @@ namespace KappaSeries
         private static void Jungleclear()
         {
             var junglemonster = MinionManager.GetMinions(_player.ServerPosition, _q.Range, MinionTypes.All, MinionTeam.Neutral, MinionOrderTypes.MaxHealth);
-            if (junglemonster.Count == 0 || junglemonster == null) return;
+            if (junglemonster.Count == 0 || junglemonster[0] == null) return;
 
             if (_cfg.Item("UseQJungle").IsActive() && _q.IsReady() && _player.Distance(junglemonster[0]) <= _q.Range)
             {

@@ -11,7 +11,7 @@ namespace KappaSeries
     {
         public Aatrox()
         {
-            CustomEvents.Game.OnGameLoad += Game_OnGameLoad;
+            CustomEvents.Game.OnGameLoad += Load;
         }
 
         private static Orbwalking.Orbwalker _orbwalker;
@@ -27,7 +27,7 @@ namespace KappaSeries
         private static Menu _cfg;
         private static Obj_AI_Hero _player;
 
-        static void Game_OnGameLoad(EventArgs args)
+        static void Load(EventArgs args)
         {
             _player = ObjectManager.Player;
 

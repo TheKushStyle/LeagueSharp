@@ -10,7 +10,7 @@ namespace KappaSeries
     {
         public Ahri()
         {
-            Load();
+            CustomEvents.Game.OnGameLoad += Load;
         }
 
         private static Orbwalking.Orbwalker _orbwalker;
@@ -23,7 +23,7 @@ namespace KappaSeries
         private static Menu _cfg;
         private static Obj_AI_Hero _player;
 
-        private void Load()
+        private void Load(EventArgs args)
         {
             _player = ObjectManager.Player;
 

@@ -27,10 +27,10 @@ namespace KappaSeries
 
         public Volibear()
         {
-            Load();
+            CustomEvents.Game.OnGameLoad += Load;
         }
 
-        private static void Load()
+        private static void Load(EventArgs args)
         {
             _player = ObjectManager.Player;
 
