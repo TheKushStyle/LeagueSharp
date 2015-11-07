@@ -59,6 +59,7 @@ namespace KappaSeries
             _cfg.SubMenu("Combo").AddItem(new MenuItem("UseW", "Use W After R")).SetValue(true);
             _cfg.SubMenu("Combo").AddItem(new MenuItem("UseE", "Use E")).SetValue(true);
             _cfg.SubMenu("Combo").AddItem(new MenuItem("UseR", "Use R")).SetValue(true);
+            _cfg.SubMenu("Combo").AddItem(new MenuItem("Qaa", "Force AA On Q buff").SetValue(true));
             _cfg.SubMenu("Combo").AddItem(new MenuItem("RChase", "Use R to Chase Target")).SetValue(true);
             _cfg.SubMenu("Combo").AddItem(new MenuItem("RChaseRange", "Range To Chase target with R").SetValue(new Slider(600, 0, 700)));
 
@@ -314,6 +315,10 @@ namespace KappaSeries
             if (_cfg.Item("ComboMode").GetValue<StringList>().SelectedValue == "QRWE")
             {
                 UseQ(t);
+               if (_cfg.Item("Qaa").IsActive() && _player.AttackRange <= t.Distance(_player) && t.HasBuff("AkaliMota"))
+                {
+                    return;
+                }
                 UseRChase(t);
                 UseR(t);
                 UseE(t);
@@ -323,6 +328,10 @@ namespace KappaSeries
                 UseRChase(t);
                 UseR(t);
                 UseQ(t);
+                if (_cfg.Item("Qaa").IsActive() && _player.AttackRange <= t.Distance(_player) && t.HasBuff("AkaliMota"))
+                {
+                    return;
+                }
                 UseE(t);
             }
             
