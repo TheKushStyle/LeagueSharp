@@ -29,7 +29,7 @@ namespace KappaSeries
 
             _q = new Spell(SpellSlot.Q, 1000);
             _w = new Spell(SpellSlot.W, 162);
-            _e = new Spell(SpellSlot.E, 215);
+            _e = new Spell(SpellSlot.E, 400);
             _r = new Spell(SpellSlot.R, 0);
 
             _q.SetSkillshot(_q.Instance.SData.SpellCastTime, 60f, 2000f, true, SkillshotType.SkillshotLine);
