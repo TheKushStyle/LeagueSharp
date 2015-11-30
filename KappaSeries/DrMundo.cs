@@ -29,7 +29,7 @@ namespace KappaSeries
 
             _q = new Spell(SpellSlot.Q, 1000);
             _w = new Spell(SpellSlot.W, 162);
-            _e = new Spell(SpellSlot.E, 125);
+            _e = new Spell(SpellSlot.E, 215);
             _r = new Spell(SpellSlot.R, 0);
 
             _q.SetSkillshot(_q.Instance.SData.SpellCastTime, 60f, 2000f, true, SkillshotType.SkillshotLine);
@@ -270,12 +270,12 @@ namespace KappaSeries
             {
                 _q.Cast(minion[0]);
             }
-            if (_w.IsReady() && minion[0].Distance(_player) <= _cfg.Item("WRange").GetValue<Slider>().Value && !activeW)
+            if (_w.IsReady() && minion[0].Distance(_player) <= _cfg.Item("WRange").GetValue<Slider>().Value && !activeW && _cfg.Item("UseWLane").IsActive())
             {
                 _w.Cast();
             }
 
-            if (_w.IsReady() && minion[0].Distance(_player) >= _cfg.Item("WRange").GetValue<Slider>().Value && activeW)
+            if (_w.IsReady() && minion[0].Distance(_player) >= _cfg.Item("WRange").GetValue<Slider>().Value && activeW && _cfg.Item("UseWLane").IsActive())
             {
                 _w.Cast();
             }
@@ -296,12 +296,12 @@ namespace KappaSeries
                 _q.Cast(junglemonster[0]);
             }
 
-            if (_w.IsReady() && junglemonster[0].Distance(_player) <= _cfg.Item("WRange").GetValue<Slider>().Value && !activeW)
+            if (_w.IsReady() && junglemonster[0].Distance(_player) <= _cfg.Item("WRange").GetValue<Slider>().Value && !activeW && _cfg.Item("UseWJungle").IsActive())
             {
                 _w.Cast();
             }
 
-            if (_w.IsReady() && junglemonster[0].Distance(_player) >= _cfg.Item("WRange").GetValue<Slider>().Value && activeW)
+            if (_w.IsReady() && junglemonster[0].Distance(_player) >= _cfg.Item("WRange").GetValue<Slider>().Value && activeW && _cfg.Item("UseWJungle").IsActive())
             {
                 _w.Cast();
             }
