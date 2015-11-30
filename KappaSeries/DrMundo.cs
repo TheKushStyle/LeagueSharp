@@ -112,6 +112,16 @@ namespace KappaSeries
             Game.OnUpdate += Game_OnUpdate;
             Drawing.OnDraw += OnDraw;
             AntiGapcloser.OnEnemyGapcloser += OnGapCloser;
+            Orbwalking.AfterAttack += OrbwalkingAfterAttack;
+        }
+
+        private static void OrbwalkingAfterAttack(AttackableUnit unit, AttackableUnit target)
+        {
+            var t = TargetSelector.GetTarget(_e.Range, TargetSelector.DamageType.Magical);
+            if (_cfg.Item("UseE").IsActive() && t.Distance(_player) <= _e.Range && _e.IsReady() && t.IsValidTarget())
+            {
+                _e.Cast();
+            }
         }
 
         private static void Game_OnUpdate(EventArgs args)
@@ -427,10 +437,6 @@ namespace KappaSeries
                 _q.Cast(t);
             }
 
-            if (_cfg.Item("UseE").IsActive() && t.Distance(_player) <= _e.Range && _e.IsReady() && t.IsValidTarget())
-            {
-                _e.Cast();
-            }
             #endregion
             #region W
             if (_w.IsReady() && t.Distance(_player) <= _cfg.Item("WRange").GetValue<Slider>().Value && !activeW && _cfg.Item("UseW").IsActive())
@@ -443,12 +449,6 @@ namespace KappaSeries
                 _w.Cast();
             }
             #endregion
-            #region E
-            if (_cfg.Item("UseE").IsActive() && t.Distance(_player) <= _e.Range && _e.IsReady() && t.IsValidTarget())
-            {
-                _e.Cast();
-            }
-#endregion
         }
 
         private static void UseItems(Obj_AI_Hero t)
